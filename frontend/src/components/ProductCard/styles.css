@@ -1,6 +1,5 @@
 .product-card {
-  margin-bottom: 25px;
-  height: 300px;
+  margin-bottom: 24px;
 }
 
 .product-card img {
@@ -9,4 +8,8 @@
 
 .card-bottom-container {
   padding: 15px 20px 30px 20px;
+}
+
+.card-bottom-container h5 {
+  min-height: 50px;
 }
