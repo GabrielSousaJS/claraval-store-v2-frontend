@@ -1,0 +1,29 @@
+.search-bar {
+  width: 40%;
+  border-radius: 10px;
+  background: #1e0848;
+
+  max-height: 50px;
+}
+
+.search-bar input {
+  background: none;
+  border: none;
+  outline: none;
+
+  width: 95%;
+
+  font-size: 16px;
+}
+
+.search-bar button {
+  background: none;
+  border: none;
+  padding: 0 15px 0 0;
+}
+
+@media (max-width: 576px) {
+  .search-bar input {
+    font-size: 14px;
+  }
+}

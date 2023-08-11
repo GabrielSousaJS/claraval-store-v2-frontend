@@ -1,12 +1,13 @@
 import "./assets/styles/custom.scss";
 import "./index.css";
+import HeaderClient from "./components/HeaderClient";
 
 function App() {
   return (
     <>
-      <h1 className="bg-primary">Hello Word</h1>
+      <HeaderClient />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

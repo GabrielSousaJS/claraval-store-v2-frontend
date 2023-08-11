@@ -1,0 +1,10 @@
+.container-logo a {
+  width: auto;
+  height: 60px;
+}
+
+@media (max-width: 576px) {
+  .container-logo a {
+    height: 40px;
+  }
+}

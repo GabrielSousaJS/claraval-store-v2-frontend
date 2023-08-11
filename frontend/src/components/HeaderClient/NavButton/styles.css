@@ -1,0 +1,9 @@
+.font-size-li {
+  font-size: 14px;
+}
+
+@media (max-width: 576px) {
+  .font-size-li {
+    font-size: 12px;
+  }
+}
