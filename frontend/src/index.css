@@ -19,3 +19,9 @@ a:hover {
   text-decoration: none;
   color: unset;
 }
+
+.base-card {
+  border-radius: 10px;
+  background-color: #eee;
+  box-shadow: 5px 5px 20px rgba(128, 128, 128, 0.5);
+}
