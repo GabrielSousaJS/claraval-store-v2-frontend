@@ -1,9 +1,10 @@
 import "./styles.css";
 
+import { ProductDTO } from "../../models/product";
 import ProductPrice from "../ProductPrice";
 
 type Props = {
-  product: any;
+  product: ProductDTO;
 };
 
 export function ProductCard({ product }: Props) {
