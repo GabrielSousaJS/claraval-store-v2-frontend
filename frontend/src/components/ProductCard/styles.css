@@ -1,5 +1,6 @@
 .product-card {
   margin-bottom: 24px;
+  cursor: pointer;
 }
 
 .product-card img {

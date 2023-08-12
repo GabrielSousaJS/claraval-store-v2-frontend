@@ -1,0 +1,18 @@
+.img-details-container img {
+  width: auto;
+  height: 300px;
+
+  padding: 15px;
+}
+
+.quantity-container span {
+  display: inline-block;
+  padding: 0 20px;
+  width: 60px;
+}
+
+@media (max-width: 992px) {
+  .details-margin-bottom {
+    margin-bottom: 20px;
+  }
+}

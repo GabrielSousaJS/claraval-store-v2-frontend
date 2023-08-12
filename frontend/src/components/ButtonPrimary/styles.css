@@ -1,0 +1,5 @@
+@media (max-width: 576px) {
+  .button-primary h6 {
+    font-size: 0.875rem;
+  }
+}
