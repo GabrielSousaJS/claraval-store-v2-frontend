@@ -2,6 +2,8 @@
 
 * {
   font-family: "Open Sans", sans-serif;
+  --primary-color: #500f6a;
+  --secondary-color: #13cffc;
 }
 
 h1,
