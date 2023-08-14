@@ -1,0 +1,7 @@
+.menu-bar-items a.active {
+  color: var(--secondary-color);
+}
+
+.menu-bar-items li {
+  border-bottom: 1px solid #e1e1e1;
+}

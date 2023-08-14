@@ -67,13 +67,13 @@ export default function ProductDetails() {
           <div className="quantity-container">
             <h6 className="mb-2">Quantidade</h6>
 
-            <button className="border-0 p-0" onClick={handleSubtract}>
+            <button onClick={handleSubtract}>
               <img src={subIcon} alt="Subtrair" />
             </button>
             <span className="text-center details-margin-bottom">
               {quantity}
             </span>
-            <button className="border-0 p-0" onClick={handleAdd}>
+            <button onClick={handleAdd}>
               <img src={addIcon} alt="Adicionar" />
             </button>
           </div>
