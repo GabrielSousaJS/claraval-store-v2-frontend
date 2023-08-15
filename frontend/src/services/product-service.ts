@@ -1,9 +1,15 @@
 import { AxiosRequestConfig } from "axios";
 import { requestBackend } from "../utils/requests";
 
-export async function findAllRequest() {
+export async function findAllRequest(
+  page: number,
+  name: string,
+  categoryId: number,
+  size = 12
+) {
   const config: AxiosRequestConfig = {
     url: "/api/products",
+    params: { page, size, name, categoryId },
   };
 
   return await requestBackend(config);
