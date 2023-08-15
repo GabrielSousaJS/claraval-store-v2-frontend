@@ -1,16 +1,13 @@
 import "./styles.css";
 
+import * as productService from "../../../services/product-service";
 import { ProductCard } from "../../../components/ProductCard";
 import { ProductDTO } from "../../../models/product";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import * as productService from "../../../services/product-service";
 import { ButtonPrimary } from "../../../components/ButtonPrimary";
-
-type QueryParams = {
-  page: number;
-  name: string;
-};
+import { SpringPage } from "../../../models/vendor/spring-page";
+import Pagination from "../../../components/Pagination";
 
 type UrlParams = {
   categoryId: string;
@@ -19,26 +16,21 @@ type UrlParams = {
 export default function Catalog() {
   const { categoryId } = useParams<UrlParams>();
 
-  const [products, setProducts] = useState<ProductDTO[]>([]);
-
-  const [queryParams, setQueryParams] = useState<QueryParams>({
-    page: 0,
-    name: "",
-  });
+  const [page, setPage] = useState<SpringPage<ProductDTO>>();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    productService
-      .findAllRequest(
-        queryParams.page,
-        queryParams.name,
-        categoryId ? Number(categoryId) : 0
-      )
-      .then((response) => {
-        setProducts(response.data.content);
-      });
+    getProducts(0);
   }, [categoryId]);
+
+  function getProducts(pageNumber: number) {
+    productService
+      .findAllRequest(pageNumber, categoryId ? Number(categoryId) : 0)
+      .then((response) => {
+        setPage(response.data);
+      });
+  }
 
   function handleCleanFilter() {
     navigate("/");
@@ -59,7 +51,7 @@ export default function Catalog() {
         )}
       </div>
       <div className="row pt-4 pb-4">
-        {products.map((product) => (
+        {page?.content.map((product) => (
           <div
             className="col-sm-6 col-lg-4 col-xl-3"
             key={product.id}
@@ -69,6 +61,12 @@ export default function Catalog() {
           </div>
         ))}
       </div>
+
+      <Pagination
+        pageCount={page ? page.totalPages : 0}
+        range={3}
+        onChange={getProducts}
+      />
     </main>
   );
 }
