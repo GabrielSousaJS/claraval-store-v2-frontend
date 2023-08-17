@@ -5,10 +5,14 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ClientHome from "./routes/ClientHome";
 import Catalog from "./routes/ClientHome/Catalog";
 import ProductDetails from "./routes/ClientHome/ProductDetails";
+import { ContextSearch } from "./utils/context-search";
+import { useState } from "react";
 
 function App() {
+  const [contextSearch, setContextSearch] = useState<string>("");
+
   return (
-    <>
+    <ContextSearch.Provider value={{ contextSearch, setContextSearch }}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<ClientHome />}>
@@ -19,7 +23,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </>
+    </ContextSearch.Provider>
   );
 }
 

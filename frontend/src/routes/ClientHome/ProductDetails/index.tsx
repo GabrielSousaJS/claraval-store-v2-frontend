@@ -40,7 +40,7 @@ export default function ProductDetails() {
   return (
     <main className="container p-4">
       <div className="ms-2">
-        <ComeBack />
+        <ComeBack clearSearch={false} />
       </div>
 
       <div className="row justify-content-lg-between gap-3 pt-4 text-dark">

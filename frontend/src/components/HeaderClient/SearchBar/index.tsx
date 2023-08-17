@@ -1,11 +1,17 @@
 import "./styles.css";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ContextSearch } from "../../../utils/context-search";
+import { useNavigate } from "react-router-dom";
 import searchIcon from "../../../assets/icons/search.svg";
 import cancelIcon from "../../../assets/icons/cancel.svg";
 
 export default function SearchBar() {
-  const [text, setText] = useState("");
+  const { setContextSearch } = useContext(ContextSearch);
+
+  const navigate = useNavigate();
+
+  const [text, setText] = useState<string>("");
 
   function handleChange(event: any) {
     setText(event.target.value);
@@ -13,12 +19,18 @@ export default function SearchBar() {
 
   function handleSubmit(event: any) {
     event.preventDefault();
+    setContextSearch(text);
+    navigate("/");
+  }
+
+  function handleClear() {
+    setText("");
   }
 
   return (
     <form
-      onSubmit={handleSubmit}
       className="search-bar d-flex justify-content-between align-items-center ms-1 me-1"
+      onSubmit={handleSubmit}
     >
       <input
         className=" border-0 text-light p-3"
@@ -27,12 +39,16 @@ export default function SearchBar() {
         placeholder="Pesquisar"
         onChange={handleChange}
       />
-      <button>
-        <img src={cancelIcon} alt="Cancelar" />
-      </button>
-      <button type="submit">
-        <img src={searchIcon} alt="Pesquisar" />
-      </button>
+      <div className="d-flex flex-row-reverse">
+        <button type="submit">
+          <img src={searchIcon} alt="Pesquisar" />
+        </button>
+        {text.length > 0 && (
+          <button onClick={handleClear}>
+            <img src={cancelIcon} alt="Cancelar" />
+          </button>
+        )}
+      </div>
     </form>
   );
 }

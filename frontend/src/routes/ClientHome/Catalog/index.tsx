@@ -3,17 +3,21 @@ import "./styles.css";
 import * as productService from "../../../services/product-service";
 import { ProductCard } from "../../../components/ProductCard";
 import { ProductDTO } from "../../../models/product";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ButtonPrimary } from "../../../components/ButtonPrimary";
 import { SpringPage } from "../../../models/vendor/spring-page";
 import Pagination from "../../../components/Pagination";
+import { ContextSearch } from "../../../utils/context-search";
+import ComeBack from "../../../components/ComeBack";
 
 type UrlParams = {
   categoryId: string;
 };
 
 export default function Catalog() {
+  const { contextSearch, setContextSearch } = useContext(ContextSearch);
+
   const { categoryId } = useParams<UrlParams>();
 
   const [page, setPage] = useState<SpringPage<ProductDTO>>();
@@ -22,17 +26,22 @@ export default function Catalog() {
 
   useEffect(() => {
     getProducts(0);
-  }, [categoryId]);
+  }, [categoryId, contextSearch]);
 
   function getProducts(pageNumber: number) {
     productService
-      .findAllRequest(pageNumber, categoryId ? Number(categoryId) : 0)
+      .findAllRequest(
+        pageNumber,
+        contextSearch,
+        categoryId ? Number(categoryId) : 0
+      )
       .then((response) => {
         setPage(response.data);
       });
   }
 
   function handleCleanFilter() {
+    setContextSearch("");
     navigate("/");
   }
 
@@ -43,7 +52,14 @@ export default function Catalog() {
   return (
     <main className="container pt-4">
       <div className="d-flex justify-content-between">
-        <h1 className="catalog-title">Catálogo de produtos</h1>
+        {contextSearch !== "" ? (
+          <div>
+            <ComeBack clearSearch={true} />
+            <h2>Resultados para "{contextSearch}"</h2>
+          </div>
+        ) : (
+          <h1 className="catalog-title">Catálogo de produtos</h1>
+        )}
         {categoryId !== undefined && (
           <div onClick={handleCleanFilter}>
             <ButtonPrimary text={"Remover filtro"} />
@@ -62,11 +78,13 @@ export default function Catalog() {
         ))}
       </div>
 
-      <Pagination
-        pageCount={page ? page.totalPages : 0}
-        range={3}
-        onChange={getProducts}
-      />
+      {page?.content.length !== 0 && (
+        <Pagination
+          pageCount={page ? page.totalPages : 0}
+          range={3}
+          onChange={getProducts}
+        />
+      )}
     </main>
   );
 }
