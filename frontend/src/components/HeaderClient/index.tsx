@@ -5,6 +5,7 @@ import logo from "../../assets/images/logo.png";
 import SearchBar from "./SearchBar";
 import MenuBar from "./MenuBar";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function HeaderClient() {
   const [menuBar, setMenuBar] = useState(false);
@@ -21,9 +22,9 @@ export default function HeaderClient() {
     <header className="bg-primary">
       <div className="container d-flex justify-content-between align-items-center pt-4 pb-4 ps-1 pe-1">
         <div className="container-logo">
-          <a href="/" className="d-flex justify-content-around">
+          <Link to={"/"}>
             <img src={logo} alt="Logo da empresa" />
-          </a>
+          </Link>
         </div>
 
         <SearchBar />

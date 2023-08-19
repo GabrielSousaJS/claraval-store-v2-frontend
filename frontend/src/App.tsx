@@ -7,6 +7,7 @@ import Catalog from "./routes/ClientHome/Catalog";
 import ProductDetails from "./routes/ClientHome/ProductDetails";
 import { ContextSearch } from "./utils/context-search";
 import { useState } from "react";
+import Login from "./routes/Login";
 
 function App() {
   const [contextSearch, setContextSearch] = useState<string>("");
@@ -21,6 +22,8 @@ function App() {
             <Route path="catalog/:categoryId" element={<Catalog />} />
             <Route path="details/:productId" element={<ProductDetails />} />
           </Route>
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>
       </BrowserRouter>
     </ContextSearch.Provider>

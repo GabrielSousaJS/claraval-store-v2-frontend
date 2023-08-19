@@ -4,6 +4,7 @@
   font-family: "Open Sans", sans-serif;
   --primary-color: #500f6a;
   --secondary-color: #13cffc;
+  --danger-color: #c51414;
 }
 
 h1,
@@ -46,6 +47,29 @@ button {
   box-shadow: 5px 5px 20px rgba(128, 128, 128, 0.5);
 }
 
+.base-input {
+  height: 50px;
+}
+
+.base-input::placeholder {
+  color: #ccc;
+}
+
+.base-input[data-invalid="true"][data-dirty="true"] {
+  border: 1px solid var(--danger-color);
+}
+
+.form-error {
+  color: var(--danger-color);
+  font-size: 0.875rem;
+  padding-left: 4px;
+  display: none;
+}
+
+.base-input[data-invalid="true"][data-dirty="true"] ~ div {
+  display: unset;
+}
+
 .modal-background {
   position: fixed;
   top: 0;
@@ -63,6 +87,16 @@ button {
   width: 280px;
   height: 100vh;
   background-color: #fff;
+}
+
+.modal-center-box {
+  background-color: #eee;
+  border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 900px;
 }
 
 @media (max-width: 576px) {
