@@ -2,11 +2,6 @@
   width: 50%;
 }
 
-.login-container-logo img {
-  width: auto;
-  height: 80px;
-}
-
 .login-container a {
   color: unset;
   color: var(--secondary-color);

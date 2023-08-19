@@ -1,11 +1,11 @@
 import "./styles.css";
 
 import { useState } from "react";
-import logo from "../../assets/images/logo.png";
 import { Link } from "react-router-dom";
 import FormInput from "../../components/FormInput";
 import { ButtonPrimary } from "../../components/ButtonPrimary";
 import * as forms from "../../utils/forms";
+import CompanyLogo from "../../components/CompanyLogo";
 
 export default function Login() {
   const [formData, setFormData] = useState<any>({
@@ -52,10 +52,8 @@ export default function Login() {
 
   return (
     <main className="modal-center-box p-4 login-container">
-      <div className="d-flex justify-content-center login-container-logo">
-        <Link to="/">
-          <img src={logo} alt="Logo da empresa" />
-        </Link>
+      <div className="text-center">
+        <CompanyLogo />
       </div>
       <h3 className="text-dark fw-light pt-4">Login</h3>
 
