@@ -1,20 +1,28 @@
 import "./styles.css";
 
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import FormInput from "../../components/FormInput";
-import { ButtonPrimary } from "../../components/ButtonPrimary";
-import * as forms from "../../utils/forms";
 import CompanyLogo from "../../components/CompanyLogo";
+import FormInput from "../../components/FormInput";
+import { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { ButtonPrimary } from "../../components/ButtonPrimary";
+import { ContextToken } from "../../utils/context-token";
+import * as forms from "../../utils/forms";
+import * as authService from "../../services/auth-service";
 
 export default function Login() {
+  const { setContextTokenPayload } = useContext(ContextToken);
+
+  const [submitResponseFail, setSubmitResponseFail] = useState(false);
+
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState<any>({
     username: {
       value: "",
       id: "username",
       name: "username",
       type: "text",
-      placeholder: "Email",
+      placeholder: "E-mail",
       validation: function (value: string) {
         return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
           value.toLowerCase()
@@ -45,9 +53,28 @@ export default function Login() {
     setFormData(forms.dirtyAndValidate(formData, name));
   }
 
-  function handleSubmit() {
-    const requestBody = forms.toValues(formData);
-    console.log(requestBody);
+  function handleSubmit(event: any) {
+    event.preventDefault();
+
+    setSubmitResponseFail(false);
+
+    const formDataValidated = forms.dirtyAndValidateAll(formData);
+
+    if (forms.hasAnyInvalid(formDataValidated)) {
+      setFormData(formDataValidated);
+      return;
+    }
+
+    authService
+      .loginRequest(forms.toValues(formDataValidated))
+      .then((response) => {
+        authService.saveAccessToken(response.data.access_token);
+        setContextTokenPayload(authService.getAccessTokenPayload());
+        navigate("/");
+      })
+      .catch(() => {
+        setSubmitResponseFail(true);
+      });
   }
 
   return (
@@ -55,7 +82,15 @@ export default function Login() {
       <div className="text-center">
         <CompanyLogo />
       </div>
-      <h3 className="text-dark fw-light pt-4">Login</h3>
+      <h3 className="text-dark fw-light pt-4 pb-3">Login</h3>
+
+      {submitResponseFail && (
+        <div className="text-center">
+          <p className="d-inline-flex p-3 fw-bold form-login-error">
+            E-mail ou senha incorretos
+          </p>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit}>
         <div className="pt-3">

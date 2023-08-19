@@ -52,7 +52,7 @@ button {
 }
 
 .base-input::placeholder {
-  color: #ccc;
+  color: #818181;
 }
 
 .base-input[data-invalid="true"][data-dirty="true"] {
