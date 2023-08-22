@@ -7,8 +7,8 @@ import {
 import { CLIENT_ID, CLIENT_SECRET } from "../utils/system";
 import { AxiosRequestConfig } from "axios";
 import { requestBackend } from "../utils/requests";
-import * as accessTokenRepository from "../localStorage/access-token-repository";
 import jwtDecode from "jwt-decode";
+import * as accessTokenRepository from "../localStorage/access-token-repository";
 
 export function loginRequest(loginData: CredentialsDTO) {
   const headers = {
@@ -29,20 +29,20 @@ export function loginRequest(loginData: CredentialsDTO) {
 }
 
 export function saveAccessToken(token: string) {
-  accessTokenRepository.save(token);
+  accessTokenRepository.saveAuthData(token);
 }
 
 export function getAccessToken() {
-  return accessTokenRepository.get();
+  return accessTokenRepository.getAuthData();
 }
 
 export function logout() {
-  accessTokenRepository.remove();
+  accessTokenRepository.removeAuthData();
 }
 
 export function getAccessTokenPayload(): AccessTokenPayloadDTO | undefined {
   try {
-    const token = accessTokenRepository.get();
+    const token = accessTokenRepository.getAuthData();
     return token == null
       ? undefined
       : (jwtDecode(token) as AccessTokenPayloadDTO);
