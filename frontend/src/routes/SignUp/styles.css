@@ -1,0 +1,24 @@
+.signup-container {
+  margin: 10vh 0;
+}
+
+.button-signup-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+  .signup-container {
+    margin: 5vh 0;
+  }
+}
+
+@media (max-width: 390px) {
+  .button-signup-container {
+    flex-direction: column-reverse;
+  }
+
+  .button-confirm {
+    margin-bottom: 16px;
+  }
+}

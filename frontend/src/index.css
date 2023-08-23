@@ -77,7 +77,6 @@ button {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.3);
-  align-items: center;
 }
 
 .modal-box {
@@ -97,6 +96,12 @@ button {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 900px;
+}
+
+@media (max-width: 992px) {
+  .modal-center-box {
+    width: 90%;
+  }
 }
 
 @media (max-width: 576px) {

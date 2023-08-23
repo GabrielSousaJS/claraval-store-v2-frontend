@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { AccessTokenPayloadDTO } from "./models/auth";
 import { ContextToken } from "./utils/context-token";
 import * as authService from "./services/auth-service";
+import SignUp from "./routes/SignUp";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
@@ -36,7 +37,8 @@ function App() {
               <Route path="catalog/:categoryId" element={<Catalog />} />
               <Route path="details/:productId" element={<ProductDetails />} />
             </Route>
-            <Route path="/login" element={<Login />} />
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<SignUp />} />
             <Route path="*" element={<h1>Not Found</h1>} />
           </Routes>
         </BrowserRouter>

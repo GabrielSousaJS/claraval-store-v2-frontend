@@ -8,7 +8,7 @@
 }
 
 .menu-bar-items li,
-li:hover {
+.menu-bar-items li:hover {
   border-bottom: 1px solid #e1e1e1;
   cursor: pointer;
 }

@@ -119,7 +119,7 @@ export default function Login() {
 
         <div className="pt-3 text-center">
           Ainda não tem cadastro?
-          <Link to={"#"} className="ps-2">
+          <Link to={"/signup"} className="ps-2">
             Cadastre-se
           </Link>
         </div>

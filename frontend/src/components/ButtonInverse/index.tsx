@@ -6,7 +6,7 @@ type Props = {
 
 export default function ButtonInverse({ text }: Props) {
   return (
-    <button className="btn btn-danger p-3 button-invserse">
+    <button className="btn btn-danger p-3 w-100 button-invserse">
       <h6 className="text-uppercase">{text}</h6>
     </button>
   );
