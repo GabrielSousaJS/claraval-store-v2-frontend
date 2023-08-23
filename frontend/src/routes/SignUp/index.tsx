@@ -5,9 +5,12 @@ import FormInput from "../../components/FormInput";
 import ButtonInverse from "../../components/ButtonInverse";
 import { useState } from "react";
 import { ButtonPrimary } from "../../components/ButtonPrimary";
+import * as forms from "../../utils/forms";
+import * as viaCepService from "../../services/viacep-service";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
-  const [formData, setFormData] = useState<any>({
+  const [formDataUser, setFormDataUser] = useState<any>({
     name: {
       value: "",
       id: "name",
@@ -51,93 +54,152 @@ export default function SignUp() {
       },
       message: "A senha deve conter no mínimo 8 caracteres",
     },
-    address: {
-      street: {
-        value: "",
-        id: "street",
-        name: "street",
-        type: "text",
-        placeholder: "Rua",
-        validation: function (value: string) {
-          return /^\S.{2}[a-zA-Z\s\d\W]*$/g.test(value);
-        },
-        message: "Campo inválido",
+    address: {},
+  });
+
+  const [formDataAddress, setFormDataAddress] = useState<any>({
+    street: {
+      value: "",
+      id: "street",
+      name: "street",
+      type: "text",
+      placeholder: "Rua",
+      validation: function (value: string) {
+        return /^\S.{2}[a-zA-Z\s\d\W]*$/g.test(value);
       },
-      cep: {
-        value: "",
-        id: "cep",
-        name: "cep",
-        type: "text",
-        placeholder: "CEP",
-        validation: function (value: string) {
-          return /^[0-9]{5}-[0-9]{3}$/.test(value);
-        },
-        message: "Informe um CEP válido",
+      message: "Campo inválido",
+    },
+    cep: {
+      value: "",
+      id: "cep",
+      name: "cep",
+      type: "text",
+      placeholder: "CEP",
+      validation: function (value: string) {
+        return /^[0-9]{5}-[0-9]{3}$/.test(value);
       },
-      number: {
-        value: "",
-        id: "number",
-        name: "number",
-        type: "number",
-        placeholder: "Número",
-        validation: function (value: any) {
-          const numberAddress = Number(value).toFixed(0);
-          return Number(numberAddress) > 0;
-        },
-        message: "Campo inválido",
+      message: "Informe um CEP válido",
+    },
+    number: {
+      value: "",
+      id: "number",
+      name: "number",
+      type: "number",
+      placeholder: "Número",
+      validation: function (value: any) {
+        const numberAddress = Number(value).toFixed(0);
+        return Number(numberAddress) > 0;
       },
-      neighborhood: {
-        value: "",
-        id: "neighborhood",
-        name: "neighborhood",
-        type: "text",
-        placeholder: "Bairro",
-        validation: function (value: string) {
-          return /^\S.{2}[a-zA-Z\s\d\W]*$/g.test(value);
-        },
+      message: "Campo inválido",
+    },
+    neighborhood: {
+      value: "",
+      id: "neighborhood",
+      name: "neighborhood",
+      type: "text",
+      placeholder: "Bairro",
+      validation: function (value: string) {
+        return /^\S.{2}[a-zA-Z\s\d\W]*$/g.test(value);
       },
-      complement: {
-        value: "",
-        id: "complement",
-        name: "complement",
-        type: "text",
-        placeholder: "Complemento",
+      message: "Campo inválido",
+    },
+    complement: {
+      value: "",
+      id: "complement",
+      name: "complement",
+      type: "text",
+      placeholder: "Complemento",
+    },
+    city: {
+      value: "",
+      id: "city",
+      name: "city",
+      type: "text",
+      placeholder: "Cidade",
+      validation: function (value: string) {
+        return /^.{3,100}$/.test(value);
       },
-      city: {
-        value: "",
-        id: "city",
-        name: "city",
-        type: "text",
-        placeholder: "Cidade",
-        validation: function (value: string) {
-          return /^.{3,100}$/.test(value);
-        },
-        message: "Campo inválido",
+      message: "Campo inválido",
+    },
+    state: {
+      value: "",
+      id: "state",
+      name: "state",
+      type: "text",
+      placeholder: "Estado",
+      validation: function (value: string) {
+        return /^.{2,100}$/.test(value);
       },
-      state: {
-        value: "",
-        id: "state",
-        name: "state",
-        type: "text",
-        placeholder: "Estado",
-        validation: function (value: string) {
-          return /^.{3,100}$/.test(value);
-        },
-        message: "Campo inválido",
+      message: "Campo inválido",
+    },
+    country: {
+      value: "",
+      id: "country",
+      name: "country",
+      type: "text",
+      placeholder: "País",
+      validation: function (value: string) {
+        return /^.{3,100}$/.test(value);
       },
-      country: {
-        value: "",
-        id: "country",
-        name: "country",
-        type: "text",
-        placeholder: "País",
-        validation: function (value: string) {
-          return /^.{3,100}$/.test(value);
-        },
-        message: "Campo inválido",
-      },
+      message: "Campo inválido",
     },
   });
+
+  const navigate = useNavigate();
+
+  function handleTurnDirtyUser(name: string) {
+    setFormDataUser(forms.dirtyAndValidate(formDataUser, name));
+  }
+
+  function handleInputChangeUser(event: any) {
+    setFormDataUser(
+      forms.updateAndValidate(
+        formDataUser,
+        event.target.name,
+        event.target.value
+      )
+    );
+  }
+
+  function handleTurnDirtyAddress(name: string) {
+    setFormDataAddress(forms.dirtyAndValidate(formDataAddress, name));
+  }
+
+  function handleInputChangeAddress(event: any) {
+    setFormDataAddress(
+      forms.updateAndValidate(
+        formDataAddress,
+        event.target.name,
+        event.target.value
+      )
+    );
+
+    if (validateCEP(event.target.value) && event.target.name === "cep")
+      getCep(event.target.value);
+  }
+
+  function validateCEP(cep: string): boolean {
+    return /^[0-9]{5}-[0-9]{3}$/.test(cep);
+  }
+
+  function getCep(cep: string) {
+    viaCepService.getCepRequest(cep.replace("-", "")).then((response) => {
+      if (response.data.erro) return;
+
+      setFormDataAddress(
+        forms.cepToFormAddress(formDataAddress, response.data)
+      );
+    });
+  }
+
+  function handleCancelClick(event: any) {
+    event.preventDefault();
+    navigate("/");
+  }
+
+  function handleSubmit(event: any) {
+    event.preventDefault();
+  }
 
   return (
     <main className="signup-container ps-2 pe-2">
@@ -146,128 +208,121 @@ export default function SignUp() {
           <CompanyLogo />
         </div>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-md-8 pb-2">
               <FormInput
-                {...formData.name}
+                {...formDataUser.name}
                 className="form-control base-input"
-                onTurnDirty={() => {}}
-                onChange={() => {}}
+                onTurnDirty={handleTurnDirtyUser}
+                onChange={handleInputChangeUser}
               />
-              <div className="form-error">{formData.name.message}</div>
+              <div className="form-error">{formDataUser.name.message}</div>
             </div>
             <div className="col-md-4 pb-2">
               <FormInput
-                {...formData.birthDate}
+                {...formDataUser.birthDate}
                 className="form-control base-input"
-                onTurnDirty={() => {}}
-                onChange={() => {}}
+                onTurnDirty={handleTurnDirtyUser}
+                onChange={handleInputChangeUser}
               />
-              <div className="form-error">{formData.birthDate.message}</div>
+              <div className="form-error">{formDataUser.birthDate.message}</div>
             </div>
             <div className="col-sm-12 pb-2">
               <FormInput
-                {...formData.email}
+                {...formDataUser.email}
                 className="form-control base-input"
-                onTurnDirty={() => {}}
-                onChange={() => {}}
+                onTurnDirty={handleTurnDirtyUser}
+                onChange={handleInputChangeUser}
               />
-              <div className="form-error">{formData.email.message}</div>
+              <div className="form-error">{formDataUser.email.message}</div>
             </div>
             <div className="col-sm-12 pb-2">
               <FormInput
-                {...formData.password}
+                {...formDataUser.password}
                 className="form-control base-input"
-                onTurnDirty={() => {}}
-                onChange={() => {}}
+                onTurnDirty={handleTurnDirtyUser}
+                onChange={handleInputChangeUser}
               />
-              <div className="form-error">{formData.password.message}</div>
+              <div className="form-error">{formDataUser.password.message}</div>
             </div>
             <div className="col-sm-12 pb-2">
               <FormInput
-                {...formData.address.cep}
+                {...formDataAddress.cep}
                 className="form-control base-input"
-                onTurnDirty={() => {}}
-                onChange={() => {}}
+                onTurnDirty={handleTurnDirtyAddress}
+                onChange={handleInputChangeAddress}
               />
-              <div className="form-error">{formData.address.cep.message}</div>
+              <div className="form-error">{formDataAddress.cep.message}</div>
             </div>
             <div className="col-md-6 pb-2">
               <FormInput
-                {...formData.address.street}
+                {...formDataAddress.street}
                 className="form-control base-input"
-                onTurnDirty={() => {}}
-                onChange={() => {}}
+                onTurnDirty={handleTurnDirtyAddress}
+                onChange={handleInputChangeAddress}
+              />
+              <div className="form-error">{formDataAddress.street.message}</div>
+            </div>
+            <div className="col-md-6 pb-2">
+              <FormInput
+                {...formDataAddress.number}
+                className="form-control base-input"
+                onTurnDirty={handleTurnDirtyAddress}
+                onChange={handleInputChangeAddress}
+              />
+              <div className="form-error">{formDataAddress.number.message}</div>
+            </div>
+            <div className="col-md-6 pb-2">
+              <FormInput
+                {...formDataAddress.neighborhood}
+                className="form-control base-input"
+                onTurnDirty={handleTurnDirtyAddress}
+                onChange={handleInputChangeAddress}
               />
               <div className="form-error">
-                {formData.address.street.message}
+                {formDataAddress.neighborhood.message}
               </div>
             </div>
             <div className="col-md-6 pb-2">
               <FormInput
-                {...formData.address.number}
+                {...formDataAddress.complement}
                 className="form-control base-input"
-                onTurnDirty={() => {}}
-                onChange={() => {}}
+                onTurnDirty={handleTurnDirtyAddress}
+                onChange={handleInputChangeAddress}
               />
-              <div className="form-error">
-                {formData.address.number.message}
-              </div>
-            </div>
-            <div className="col-md-6 pb-2">
-              <FormInput
-                {...formData.address.neighborhood}
-                className="form-control base-input"
-                onTurnDirty={() => {}}
-                onChange={() => {}}
-              />
-              <div className="form-error">
-                {formData.address.neighborhood.message}
-              </div>
-            </div>
-            <div className="col-md-6 pb-2">
-              <FormInput
-                {...formData.address.complement}
-                className="form-control base-input"
-                onTurnDirty={() => {}}
-                onChange={() => {}}
-              />
-              <div className="form-error">
-                {formData.address.complement.message}
-              </div>
             </div>
             <div className="col-md-4 pb-2">
               <FormInput
-                {...formData.address.city}
+                {...formDataAddress.city}
                 className="form-control base-input"
-                onTurnDirty={() => {}}
-                onChange={() => {}}
+                onTurnDirty={handleTurnDirtyAddress}
+                onChange={handleInputChangeAddress}
               />
-              <div className="form-error">{formData.address.city.message}</div>
+              <div className="form-error">{formDataAddress.city.message}</div>
             </div>
             <div className="col-md-4 pb-2">
               <FormInput
-                {...formData.address.state}
+                {...formDataAddress.state}
                 className="form-control base-input"
-                onTurnDirty={() => {}}
-                onChange={() => {}}
+                onTurnDirty={handleTurnDirtyAddress}
+                onChange={handleInputChangeAddress}
               />
-              <div className="form-error">{formData.address.state.message}</div>
+              <div className="form-error">{formDataAddress.state.message}</div>
             </div>
             <div className="col-md-4 pb-3">
               <FormInput
-                {...formData.address.country}
+                {...formDataAddress.country}
                 className="form-control base-input"
-                onTurnDirty={() => {}}
-                onChange={() => {}}
+                onTurnDirty={handleTurnDirtyAddress}
+                onChange={handleInputChangeAddress}
               />
-              <div className="form-error">{formData.address.city.message}</div>
+              <div className="form-error">{formDataAddress.city.message}</div>
             </div>
           </div>
 
           <div className="button-signup-container">
-            <div>
+            <div onClick={handleCancelClick}>
               <ButtonInverse text="Cancelar" />
             </div>
             <div className="button-confirm">

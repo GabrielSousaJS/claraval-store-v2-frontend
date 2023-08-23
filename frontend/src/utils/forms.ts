@@ -1,3 +1,5 @@
+import { CepDTO } from "../models/vendor/via-cep";
+
 export function update(inputs: any, name: string, newValue: any) {
   return { ...inputs, [name]: { ...inputs[name], value: newValue } };
 }
@@ -86,4 +88,15 @@ export function hasAnyInvalid(inputs: any) {
   }
 
   return false;
+}
+
+export function cepToFormAddress(inputs: any, cep: CepDTO) {
+  inputs.cep.value = cep.cep;
+  inputs.street.value = cep.logradouro;
+  inputs.neighborhood.value = cep.bairro;
+  inputs.complement.value = cep.complemento;
+  inputs.city.value = cep.localidade;
+  inputs.state.value = cep.uf;
+
+  return inputs;
 }
