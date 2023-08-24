@@ -2,16 +2,20 @@ import "./assets/styles/custom.scss";
 import "./index.css";
 
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import ClientHome from "./routes/ClientHome";
-import Catalog from "./routes/ClientHome/Catalog";
-import ProductDetails from "./routes/ClientHome/ProductDetails";
-import Login from "./routes/Login";
 import { ContextSearch } from "./utils/context-search";
 import { useEffect, useState } from "react";
 import { AccessTokenPayloadDTO } from "./models/auth";
 import { ContextToken } from "./utils/context-token";
-import * as authService from "./services/auth-service";
+import ClientHome from "./routes/ClientHome";
+import Catalog from "./routes/ClientHome/Catalog";
+import ProductDetails from "./routes/ClientHome/ProductDetails";
+import Login from "./routes/Login";
 import SignUp from "./routes/SignUp";
+import UserProfile from "./routes/UserProfile";
+import UserPanel from "./routes/UserProfile/UserPanel";
+import UserOrder from "./routes/UserProfile/UserOrder";
+import UserAddress from "./routes/UserProfile/UserAddress";
+import * as authService from "./services/auth-service";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
@@ -36,6 +40,13 @@ function App() {
               <Route path="catalog" element={<Catalog />} />
               <Route path="catalog/:categoryId" element={<Catalog />} />
               <Route path="details/:productId" element={<ProductDetails />} />
+              <Route path="profile" element={<UserProfile />}>
+                <Route index element={<Navigate to="panel" />} />
+                <Route path="panel" element={<UserPanel />} />
+                <Route path="orders" element={<UserOrder />} />
+                <Route path="address" element={<UserAddress />} />
+                <Route path="account" element={<UserAddress />} />
+              </Route>
             </Route>
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<SignUp />} />

@@ -63,7 +63,9 @@ export default function MenuBar({ onMenuBarClose }: Props) {
           <div className="ps-3 pt-4 pb-4 menu-bar-top">
             <p>Oie!</p>
             {user ? (
-              <p>{user?.name.split(" ")[0]}</p>
+              <Link to="/profile" onClick={() => onMenuBarClose()}>
+                {user?.name.split(" ")[0]}
+              </Link>
             ) : (
               <Link to={"login"}>Entre ou cadastre-se</Link>
             )}
