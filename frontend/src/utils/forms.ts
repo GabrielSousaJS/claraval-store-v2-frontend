@@ -100,3 +100,15 @@ export function cepToFormAddress(inputs: any, cep: CepDTO) {
 
   return inputs;
 }
+
+export function setBackendErrors(inputs: any, errors: any[]) {
+  const newInputs = { ...inputs };
+
+  errors.forEach((item) => {
+    newInputs[item.fieldError].message = item.message;
+    newInputs[item.fieldError].dirty = "true";
+    newInputs[item.fieldError].invalid = "true";
+  });
+
+  return newInputs;
+}

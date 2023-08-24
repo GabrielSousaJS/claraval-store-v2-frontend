@@ -27,7 +27,7 @@ export default function MenuBar({ onMenuBarClose }: Props) {
 
   useEffect(() => {
     if (contextTokenPayload) {
-      userService.getProfile().then((response) => {
+      userService.getProfileRequest().then((response) => {
         setUser(response.data);
       });
     }

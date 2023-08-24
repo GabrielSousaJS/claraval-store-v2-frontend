@@ -8,8 +8,9 @@ import { ButtonPrimary } from "../../components/ButtonPrimary";
 import { useNavigate } from "react-router-dom";
 import * as forms from "../../utils/forms";
 import * as formatters from "../../utils/formatters";
-import * as viaCepService from "../../services/viacep-service";
 import * as validation from "../../utils/validations";
+import * as viaCepService from "../../services/viacep-service";
+import * as userService from "../../services/user-service";
 
 export default function SignUp() {
   const [formDataUser, setFormDataUser] = useState<any>({
@@ -176,12 +177,11 @@ export default function SignUp() {
       )
     );
 
-    if (validateCEP(event.target.value) && event.target.name === "cep")
+    if (
+      validation.cepValidation(event.target.value) &&
+      event.target.name === "cep"
+    )
       getCep(event.target.value);
-  }
-
-  function validateCEP(cep: string): boolean {
-    return /^[0-9]{5}-[0-9]{3}$/.test(cep);
   }
 
   function getCep(cep: string) {
@@ -201,10 +201,41 @@ export default function SignUp() {
 
   function handleSubmit(event: any) {
     event.preventDefault();
+    const formDataUserValidated = forms.dirtyAndValidateAll(formDataUser);
+    const formDataAddressValidated = forms.dirtyAndValidateAll(formDataAddress);
+
+    if (
+      forms.hasAnyInvalid(formDataUserValidated) &&
+      forms.hasAnyInvalid(formDataAddressValidated)
+    ) {
+      setFormDataUser(formDataUserValidated);
+      setFormDataAddress(formDataAddressValidated);
+      return;
+    }
+
+    const address = forms.toValues(formDataAddress);
     const requestBody = forms.toValues(formDataUser);
     requestBody.birthDate = formatters.formatDate(requestBody.birthDate);
-    requestBody.address = forms.toValues(formDataAddress);
-    console.log(requestBody);
+    requestBody.address = address;
+
+    return userService
+      .insertClientRequest(requestBody)
+      .then(() => {
+        navigate("/login");
+      })
+      .catch((error) => {
+        const newInputsUser = forms.setBackendErrors(
+          formDataUserValidated,
+          error.response.data.errors
+        );
+        setFormDataUser(newInputsUser);
+
+        const newInputsAddress = forms.setBackendErrors(
+          formDataAddressValidated,
+          error.response.data.errors
+        );
+        setFormDataAddress(newInputsAddress);
+      });
   }
 
   return (
