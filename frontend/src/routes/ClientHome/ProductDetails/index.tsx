@@ -51,7 +51,7 @@ export default function ProductDetails() {
 
           <div className="col-lg-6 pt-4">
             <h3 className="mb-2">{product?.name}</h3>
-            <p>{product?.description}</p>
+            <p className="fw-bold">{product?.description}</p>
           </div>
         </div>
 

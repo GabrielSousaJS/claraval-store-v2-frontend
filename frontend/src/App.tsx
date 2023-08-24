@@ -11,10 +11,11 @@ import Catalog from "./routes/ClientHome/Catalog";
 import ProductDetails from "./routes/ClientHome/ProductDetails";
 import Login from "./routes/Login";
 import SignUp from "./routes/SignUp";
-import UserProfile from "./routes/UserProfile";
-import UserPanel from "./routes/UserProfile/UserPanel";
-import UserOrder from "./routes/UserProfile/UserOrder";
-import UserAddress from "./routes/UserProfile/UserAddress";
+import UserProfile from "./routes/ClientHome/UserProfile";
+import UserPanel from "./routes/ClientHome/UserProfile/UserPanel";
+import UserOrder from "./routes/ClientHome/UserProfile/UserOrder";
+import UserAddress from "./routes/ClientHome/UserProfile/UserAddress";
+import UserAccount from "./routes/ClientHome/UserProfile/UserAccount";
 import * as authService from "./services/auth-service";
 
 function App() {
@@ -45,7 +46,7 @@ function App() {
                 <Route path="panel" element={<UserPanel />} />
                 <Route path="orders" element={<UserOrder />} />
                 <Route path="address" element={<UserAddress />} />
-                <Route path="account" element={<UserAddress />} />
+                <Route path="account" element={<UserAccount />} />
               </Route>
             </Route>
             <Route path="login" element={<Login />} />
