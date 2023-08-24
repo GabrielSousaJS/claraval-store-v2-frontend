@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import * as forms from "../../utils/forms";
 import * as formatters from "../../utils/formatters";
 import * as viaCepService from "../../services/viacep-service";
+import * as validation from "../../utils/validations";
 
 export default function SignUp() {
   const [formDataUser, setFormDataUser] = useState<any>({
@@ -19,7 +20,7 @@ export default function SignUp() {
       type: "text",
       placeholder: "Nome",
       validation: function (value: string) {
-        return /^.{3,80}$/.test(value);
+        return validation.legthDefaultValidation(value);
       },
       message: "Informe um nome entre 3 a 80 caracteres",
     },
@@ -30,16 +31,7 @@ export default function SignUp() {
       type: "date",
       placeholder: "Data de nascimento",
       validation: function (value: string) {
-        const date = new Date(value);
-        const currentDate = new Date();
-        const eighteenYearsAgo = new Date(
-          currentDate.getFullYear() - 18,
-          currentDate.getMonth(),
-          currentDate.getDate()
-        );
-
-        if (date <= eighteenYearsAgo) return true;
-        else return false;
+        return validation.birthDateValidation(value);
       },
       message: "Idade mínima de 18 anos",
     },
@@ -50,7 +42,7 @@ export default function SignUp() {
       type: "text",
       placeholder: "E-mail",
       validation: function (value: string) {
-        return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value);
+        return validation.emailValidation(value);
       },
       message: "Informe um e-mail válido",
     },
@@ -61,7 +53,7 @@ export default function SignUp() {
       type: "password",
       placeholder: "Senha",
       validation: function (value: string) {
-        return /^.{8,}$/.test(value);
+        return validation.passwordValidation(value);
       },
       message: "A senha deve conter no mínimo 8 caracteres",
     },
@@ -76,7 +68,7 @@ export default function SignUp() {
       type: "text",
       placeholder: "Rua",
       validation: function (value: string) {
-        return /^\S.{2}[a-zA-Z\s\d\W]*$/g.test(value);
+        return validation.streetValidation(value);
       },
       message: "Campo inválido",
     },
@@ -87,7 +79,7 @@ export default function SignUp() {
       type: "text",
       placeholder: "CEP",
       validation: function (value: string) {
-        return /^[0-9]{5}-[0-9]{3}$/.test(value);
+        return validation.cepValidation(value);
       },
       message: "Informe um CEP válido",
     },
@@ -97,9 +89,8 @@ export default function SignUp() {
       name: "number",
       type: "number",
       placeholder: "Número",
-      validation: function (value: any) {
-        const numberAddress = Number(value).toFixed(0);
-        return Number(numberAddress) > 0;
+      validation: function (value: string) {
+        return validation.numberValidation(value);
       },
       message: "Campo inválido",
     },
@@ -110,7 +101,7 @@ export default function SignUp() {
       type: "text",
       placeholder: "Bairro",
       validation: function (value: string) {
-        return /^\S.{2}[a-zA-Z\s\d\W]*$/g.test(value);
+        return validation.neighborhoodValidation(value);
       },
       message: "Campo inválido",
     },
@@ -128,7 +119,7 @@ export default function SignUp() {
       type: "text",
       placeholder: "Cidade",
       validation: function (value: string) {
-        return /^.{3,100}$/.test(value);
+        return validation.legthDefaultValidation(value);
       },
       message: "Campo inválido",
     },
@@ -137,9 +128,9 @@ export default function SignUp() {
       id: "state",
       name: "state",
       type: "text",
-      placeholder: "Estado",
+      placeholder: "Estado (UF abreviado)",
       validation: function (value: string) {
-        return /^.{2,100}$/.test(value);
+        return validation.StateValidation(value);
       },
       message: "Campo inválido",
     },
@@ -150,7 +141,7 @@ export default function SignUp() {
       type: "text",
       placeholder: "País",
       validation: function (value: string) {
-        return /^.{3,100}$/.test(value);
+        return validation.legthDefaultValidation(value);
       },
       message: "Campo inválido",
     },
