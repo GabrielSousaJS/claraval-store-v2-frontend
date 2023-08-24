@@ -98,6 +98,10 @@ button {
   width: 900px;
 }
 
+::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
 @media (max-width: 992px) {
   .modal-center-box {
     width: 90%;

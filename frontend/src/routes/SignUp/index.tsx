@@ -5,9 +5,10 @@ import FormInput from "../../components/FormInput";
 import ButtonInverse from "../../components/ButtonInverse";
 import { useState } from "react";
 import { ButtonPrimary } from "../../components/ButtonPrimary";
-import * as forms from "../../utils/forms";
-import * as viaCepService from "../../services/viacep-service";
 import { useNavigate } from "react-router-dom";
+import * as forms from "../../utils/forms";
+import * as formatters from "../../utils/formatters";
+import * as viaCepService from "../../services/viacep-service";
 
 export default function SignUp() {
   const [formDataUser, setFormDataUser] = useState<any>({
@@ -26,11 +27,21 @@ export default function SignUp() {
       value: "",
       id: "birthDate",
       name: "birthDate",
-      type: "text",
+      type: "date",
       placeholder: "Data de nascimento",
       validation: function (value: string) {
-        return /^.{3,80}$/.test(value);
+        const date = new Date(value);
+        const currentDate = new Date();
+        const eighteenYearsAgo = new Date(
+          currentDate.getFullYear() - 18,
+          currentDate.getMonth(),
+          currentDate.getDate()
+        );
+
+        if (date <= eighteenYearsAgo) return true;
+        else return false;
       },
+      message: "Idade mínima de 18 anos",
     },
     email: {
       value: "",
@@ -199,6 +210,10 @@ export default function SignUp() {
 
   function handleSubmit(event: any) {
     event.preventDefault();
+    const requestBody = forms.toValues(formDataUser);
+    requestBody.birthDate = formatters.formatDate(requestBody.birthDate);
+    requestBody.address = forms.toValues(formDataAddress);
+    console.log(requestBody);
   }
 
   return (
