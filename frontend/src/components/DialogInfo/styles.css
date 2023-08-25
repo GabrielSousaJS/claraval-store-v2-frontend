@@ -1,0 +1,13 @@
+.dialog-info-container {
+  width: 500px;
+}
+
+@media (max-width: 576px) {
+  .dialog-info-container {
+    width: 80%;
+  }
+
+  .dialog-info-container h4 {
+    font-size: 1.125rem;
+  }
+}
