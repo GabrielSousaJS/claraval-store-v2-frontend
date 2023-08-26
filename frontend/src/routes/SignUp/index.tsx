@@ -215,7 +215,7 @@ export default function SignUp() {
 
     const address = forms.toValues(formDataAddress);
     const requestBody = forms.toValues(formDataUser);
-    requestBody.birthDate = formatters.formatDate(requestBody.birthDate);
+    requestBody.birthDate = formatters.formatDateToISO(requestBody.birthDate);
     requestBody.address = address;
 
     return userService

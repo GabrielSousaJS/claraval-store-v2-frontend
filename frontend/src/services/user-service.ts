@@ -19,3 +19,14 @@ export function insertClientRequest(data: any) {
 
   return requestBackend(config);
 }
+
+export function updateClientRequest(id: number, data: any) {
+  const config: AxiosRequestConfig = {
+    method: "PUT",
+    url: `/api/users/${id}`,
+    data,
+    withCredentials: true,
+  };
+
+  return requestBackend(config);
+}

@@ -3,7 +3,12 @@ export const formatPrice = (price: number) => {
   return Intl.NumberFormat("pt-BR", params).format(price);
 };
 
-export const formatDate = (date: string): string => {
+export const formatDateToISO = (date: string): string => {
   const newDate = new Date(date);
   return newDate.toISOString();
+};
+
+export const formatDateToUS = (date: string): string => {
+  const newDate = new Date(date);
+  return newDate.toISOString().substring(0, 10);
 };
