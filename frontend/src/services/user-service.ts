@@ -30,3 +30,14 @@ export function updateClientRequest(id: number, data: any) {
 
   return requestBackend(config);
 }
+
+export function updatePasswordRequest(data: any) {
+  const config: AxiosRequestConfig = {
+    method: "PUT",
+    url: "/api/users/password",
+    data,
+    withCredentials: true,
+  };
+
+  return requestBackend(config);
+}

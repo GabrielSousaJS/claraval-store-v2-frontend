@@ -24,6 +24,16 @@ export function toValues(inputs: any) {
   return data;
 }
 
+export function toValuesPassword(inputs: any) {
+  const data: any = {};
+
+  for (let name in inputs) {
+    if (name !== "newConfirmationPassword") data[name] = inputs[name].value;
+  }
+
+  return data;
+}
+
 export function validate(inputs: any, name: string) {
   if (!inputs[name].validation) {
     return inputs;

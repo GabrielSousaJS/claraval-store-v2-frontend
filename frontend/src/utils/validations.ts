@@ -43,3 +43,19 @@ export function neighborhoodValidation(value: string): boolean {
 export function StateValidation(value: string): boolean {
   return /^[A-Z]{2}$/.test(value);
 }
+
+export function hasSameFields(inputs: any) {
+  return inputs.newPassword.value === inputs.newConfirmationPassword.value;
+}
+
+export function fieldsAreFilled(inputs: any) {
+  for (let name in inputs) {
+    if (inputs[name].value !== "") return true;
+  }
+
+  return false;
+}
+
+export function validateUpdatePassword(inputs: any) {
+  return hasSameFields(inputs) && fieldsAreFilled(inputs);
+}
