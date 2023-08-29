@@ -1,0 +1,19 @@
+.cart-item-img img {
+  width: auto;
+  height: 150px;
+}
+
+.quantity-cart-container h4 {
+  display: inline-block;
+  width: 45px;
+}
+
+.delete-cart {
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .cart-item-container {
+    flex-direction: column;
+  }
+}

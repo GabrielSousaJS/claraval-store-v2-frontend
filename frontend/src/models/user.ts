@@ -7,3 +7,8 @@ export type UserDTO = {
   email: string;
   address: AddressDTO;
 };
+
+export type ClientDTO = {
+  id: number;
+  name: string;
+};

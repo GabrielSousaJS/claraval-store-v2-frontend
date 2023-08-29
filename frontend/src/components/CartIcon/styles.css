@@ -1,0 +1,14 @@
+.cart-count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 18px;
+  height: 18px;
+  font-size: 0.625rem;
+  border-radius: 50%;
+
+  position: relative;
+  top: -10px;
+  left: -8px;
+}

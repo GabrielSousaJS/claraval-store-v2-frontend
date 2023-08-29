@@ -3,6 +3,9 @@ import SearchBar from "./SearchBar";
 import MenuBar from "./MenuBar";
 import { useState } from "react";
 import CompanyLogo from "../CompanyLogo";
+import cartIcon from "../../assets/icons/cartIcon.svg";
+import { Link } from "react-router-dom";
+import CartIcon from "../CartIcon";
 
 export default function HeaderClient() {
   const [menuBar, setMenuBar] = useState(false);
@@ -22,13 +25,21 @@ export default function HeaderClient() {
 
         <SearchBar />
 
-        <button
-          className="navbar-toggler shadow-none border-0 p-0"
-          type="button"
-          onClick={handleMenuBarOpen}
-        >
-          <img src={togglerIcon} />
-        </button>
+        <div className="d-flex">
+          <Link to="/cart" className="me-4">
+            <div className="d-flex align-items-center">
+              <CartIcon />
+            </div>
+          </Link>
+
+          <button
+            className="navbar-toggler shadow-none border-0 p-0"
+            type="button"
+            onClick={handleMenuBarOpen}
+          >
+            <img src={togglerIcon} />
+          </button>
+        </div>
       </div>
 
       {menuBar && <MenuBar onMenuBarClose={handleMenuBarClose} />}
