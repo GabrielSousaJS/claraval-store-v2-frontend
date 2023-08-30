@@ -6,11 +6,16 @@ import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ButtonPrimary } from "../../components/ButtonPrimary";
 import { ContextToken } from "../../utils/context-token";
+import { ContextCartCount } from "../../utils/context-cart";
 import * as forms from "../../utils/forms";
 import * as authService from "../../services/auth-service";
+import * as orderService from "../../services/order-service";
+import * as orderUtils from "../../utils/orders";
 
 export default function Login() {
   const { setContextTokenPayload } = useContext(ContextToken);
+
+  const { setContextCartCount } = useContext(ContextCartCount);
 
   const [submitResponseFail, setSubmitResponseFail] = useState(false);
 
@@ -70,11 +75,20 @@ export default function Login() {
       .then((response) => {
         authService.saveAccessToken(response.data.access_token);
         setContextTokenPayload(authService.getAccessTokenPayload());
+        getCartCount();
         navigate("/");
       })
       .catch(() => {
         setSubmitResponseFail(true);
       });
+  }
+
+  function getCartCount() {
+    orderService.getOrdersByClientRequest().then((response) => {
+      setContextCartCount(
+        orderUtils.hasOpenOrder(response.data)?.items.length || 0
+      );
+    });
   }
 
   return (

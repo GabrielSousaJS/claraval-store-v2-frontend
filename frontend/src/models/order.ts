@@ -3,10 +3,10 @@ import { PaymentDTO } from "./payment";
 import { ClientDTO } from "./user";
 
 export type OrderDTO = {
-  id: number;
+  id?: number;
   moment: string;
   status: string;
   client: ClientDTO;
-  payment: PaymentDTO;
+  payment?: PaymentDTO;
   items: OrderItemDTO[];
 };

@@ -8,6 +8,7 @@ import { ContextToken } from "../../../utils/context-token";
 import { UserDTO } from "../../../models/user";
 import { Link } from "react-router-dom";
 import { removeAuthData } from "../../../localStorage/access-token-repository";
+import { ContextCartCount } from "../../../utils/context-cart";
 import * as categoryService from "../../../services/category-service";
 import * as userService from "../../../services/user-service";
 
@@ -18,6 +19,8 @@ type Props = {
 export default function MenuBar({ onMenuBarClose }: Props) {
   const { contextTokenPayload, setContextTokenPayload } =
     useContext(ContextToken);
+
+  const { setContextCartCount } = useContext(ContextCartCount);
 
   const [user, setUser] = useState<UserDTO>();
 
@@ -41,6 +44,7 @@ export default function MenuBar({ onMenuBarClose }: Props) {
 
   function handleLogOut() {
     removeAuthData();
+    setContextCartCount(0);
     setContextTokenPayload(undefined);
     setUser(undefined);
     onMenuBarClose();

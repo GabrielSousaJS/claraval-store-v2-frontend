@@ -1,4 +1,4 @@
 export type PaymentDTO = {
-  id: number;
+  id?: number;
   moment: string;
 };

@@ -8,6 +8,7 @@ import subIcon from "../../../../assets/icons/subIcon.svg";
 import deleteIcon from "../../../../assets/icons/deleteIcon.svg";
 import ProductPrice from "../../../../components/ProductPrice";
 import * as productService from "../../../../services/product-service";
+import * as orderService from "../../../../services/order-service";
 
 type Props = {
   id?: number;
@@ -26,25 +27,46 @@ export default function CartItem({ id, item, onChange }: Props) {
 
   const [itemQuantity, setItemQuantity] = useState<number>(item.quantity);
 
+  useEffect(() => {
+    updateItemQuantity();
+  }, [itemQuantity]);
+
+  function updateItemQuantity() {
+    item.quantity = itemQuantity;
+    if (id) orderService.updateOrderRequest(id, item);
+    onChange();
+  }
+
   function handleSubtractItem() {
     if (itemQuantity > 1) {
       setItemQuantity(itemQuantity - 1);
+      onChange();
     }
   }
 
   function handleAddItem() {
     if (product)
-      if (itemQuantity < product.quantity) 
+      if (itemQuantity < product.quantity) {
         setItemQuantity(itemQuantity + 1);
+        onChange();
+      }
   }
 
   function getSubTotal(): number {
     return item.price * item.quantity;
   }
 
+  function handleDelete() {
+    if (id) {
+      orderService.deleteItemRequest(id, item.productId).then(() => {
+        onChange();
+      });
+    }
+  }
+
   return (
     <div className="d-flex align-items-center justify-content-between base-card p-2 cart-item-container">
-      <div className="cart-item-img pb-3">
+      <div className="cart-item-img p-2">
         <img src={item.imgUrl} alt={item.name} />
       </div>
 
@@ -66,7 +88,7 @@ export default function CartItem({ id, item, onChange }: Props) {
         <ProductPrice price={getSubTotal()} />
       </div>
 
-      <div className="delete-cart pb-3">
+      <div className="delete-cart pb-3" onClick={() => handleDelete()}>
         <img src={deleteIcon} alt="Remover" />
       </div>
     </div>
