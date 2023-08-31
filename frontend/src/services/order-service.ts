@@ -2,10 +2,33 @@ import { AxiosRequestConfig } from "axios";
 import { requestBackend } from "../utils/requests";
 import { OrderItemDTO } from "../models/order-item";
 import { PaymentDTO } from "../models/payment";
+import { OrderDTO } from "../models/order";
 
 export function getOrdersByClientRequest() {
   const config: AxiosRequestConfig = {
     url: "/api/orders/client-orders",
+    withCredentials: true,
+  };
+
+  return requestBackend(config);
+}
+
+export function insertOrderRequest(data: OrderDTO) {
+  const config: AxiosRequestConfig = {
+    method: "POST",
+    url: "/api/orders",
+    data,
+    withCredentials: true,
+  };
+
+  return requestBackend(config);
+}
+
+export function addItemToOrderRequest(orderId: number, data: OrderItemDTO) {
+  const config: AxiosRequestConfig = {
+    method: "PUT",
+    url: `/api/orders/add-item/${orderId}`,
+    data,
     withCredentials: true,
   };
 
