@@ -75,7 +75,7 @@ export default function Cart() {
           <h1 className="mb-3">Meu carrinho</h1>
 
           <div className="row">
-            <div className="col-lg-8">
+            <div className="col-lg-9">
               {order?.items.map((item) => (
                 <div className="mb-3" key={item.productId}>
                   <CartItem
@@ -89,14 +89,14 @@ export default function Cart() {
               ))}
             </div>
 
-            <div className="col-lg-4 resume-cart-container">
-              <h3 className="pb-3">Resumo do pedido</h3>
+            <div className="col-lg-3">
+              <h2 className="pb-3">Resumo</h2>
 
               <div className="d-flex justify-content-between align-items-center pb-3">
-                <h4>Total</h4>
-                <h4 className="fw-bold">
+                <h5>Total</h5>
+                <h5 className="fw-bold">
                   R$ {formatters.formatPrice(getTotal())}
-                </h4>
+                </h5>
               </div>
 
               <div onClick={handlePlaceOrderClick}>

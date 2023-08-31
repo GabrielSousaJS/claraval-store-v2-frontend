@@ -65,31 +65,33 @@ export default function CartItem({ id, item, onChange }: Props) {
   }
 
   return (
-    <div className="d-flex align-items-center justify-content-between base-card p-2 cart-item-container">
-      <div className="cart-item-img p-2">
-        <img src={item.imgUrl} alt={item.name} />
-      </div>
+    <div className="row p-2">
+      <div className="d-flex align-items-center p-0 base-card cart-item-container">
+        <div className="col-md-3 cart-item-img p-2">
+          <img src={item.imgUrl} alt={item.name} />
+        </div>
 
-      <div className="pb-3">
-        <h5>{item.name}</h5>
-      </div>
+        <div className="col-md-3 pb-3">
+          <h5>{item.name}</h5>
+        </div>
 
-      <div className="d-flex quantity-cart-container pb-3">
-        <button onClick={handleSubtractItem}>
-          <img src={subIcon} alt="Subtrair" />
-        </button>
-        <h4 className="text-center">{itemQuantity}</h4>
-        <button onClick={handleAddItem}>
-          <img src={addIcon} alt="Adicionar" />
-        </button>
-      </div>
+        <div className="col-md-2 d-flex quantity-cart-container ps-2 pb-3">
+          <button onClick={handleSubtractItem}>
+            <img src={subIcon} alt="Subtrair" />
+          </button>
+          <h4 className="text-center">{itemQuantity}</h4>
+          <button onClick={handleAddItem}>
+            <img src={addIcon} alt="Adicionar" />
+          </button>
+        </div>
 
-      <div className="pb-3">
-        <ProductPrice price={getSubTotal()} />
-      </div>
+        <div className="col-md-3 pb-3">
+          <ProductPrice price={getSubTotal()} />
+        </div>
 
-      <div className="delete-cart pb-3" onClick={() => handleDelete()}>
-        <img src={deleteIcon} alt="Remover" />
+        <div className="col-md-1 delete-cart ps-3 pb-3" onClick={() => handleDelete()}>
+          <img src={deleteIcon} alt="Remover" />
+        </div>
       </div>
     </div>
   );
