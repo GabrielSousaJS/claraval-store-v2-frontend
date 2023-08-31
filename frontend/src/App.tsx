@@ -18,6 +18,7 @@ import UserOrder from "./routes/ClientHome/UserProfile/UserOrder";
 import UserAddress from "./routes/ClientHome/UserProfile/UserAddress";
 import UserAccount from "./routes/ClientHome/UserProfile/UserAccount";
 import Cart from "./routes/ClientHome/Cart";
+import PrivateRoute from "./components/PrivateRoute";
 import * as authService from "./services/auth-service";
 
 function App() {
@@ -48,14 +49,28 @@ function App() {
                 <Route path="catalog" element={<Catalog />} />
                 <Route path="catalog/:categoryId" element={<Catalog />} />
                 <Route path="details/:productId" element={<ProductDetails />} />
-                <Route path="profile" element={<UserProfile />}>
+                <Route
+                  path="profile"
+                  element={
+                    <PrivateRoute>
+                      <UserProfile />
+                    </PrivateRoute>
+                  }
+                >
                   <Route index element={<Navigate to="panel" />} />
                   <Route path="panel" element={<UserPanel />} />
                   <Route path="orders" element={<UserOrder />} />
                   <Route path="address" element={<UserAddress />} />
                   <Route path="account" element={<UserAccount />} />
                 </Route>
-                <Route path="cart" element={<Cart />} />
+                <Route
+                  path="cart"
+                  element={
+                    <PrivateRoute>
+                      <Cart />
+                    </PrivateRoute>
+                  }
+                />
               </Route>
               <Route path="login" element={<Login />} />
               <Route path="signup" element={<SignUp />} />
