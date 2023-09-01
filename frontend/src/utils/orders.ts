@@ -7,3 +7,7 @@ export function hasOpenOrder(orders: Array<OrderDTO>): OrderDTO | undefined {
 
   return openOrder;
 }
+
+export function hasCloseOrder(orders: Array<OrderDTO>): OrderDTO[] {
+  return orders.filter((order) => order.status !== "AGUARDANDO_PAGAMENTO");
+}

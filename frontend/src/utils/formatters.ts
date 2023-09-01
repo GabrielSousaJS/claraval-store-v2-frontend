@@ -12,3 +12,8 @@ export const formatDateToUS = (date: string): string => {
   const newDate = new Date(date);
   return newDate.toISOString().substring(0, 10);
 };
+
+export const formatDateToPTBR = (date: string): string => {
+  const newDate = new Date(date);
+  return newDate.toLocaleDateString("pt-BR");
+};

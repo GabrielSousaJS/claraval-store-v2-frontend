@@ -1,11 +1,11 @@
 import togglerIcon from "../../assets/icons/togglerIcon.svg";
 import SearchBar from "./SearchBar";
 import MenuBar from "./MenuBar";
-import { useState } from "react";
 import CompanyLogo from "../CompanyLogo";
-import cartIcon from "../../assets/icons/cartIcon.svg";
-import { Link } from "react-router-dom";
 import CartIcon from "../CartIcon";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import * as authService from "../../services/auth-service";
 
 export default function HeaderClient() {
   const [menuBar, setMenuBar] = useState(false);
@@ -26,11 +26,13 @@ export default function HeaderClient() {
         <SearchBar />
 
         <div className="d-flex">
-          <Link to="/cart" className="me-4">
-            <div className="d-flex align-items-center">
-              <CartIcon />
-            </div>
-          </Link>
+          {authService.isAuthenticated() && (
+            <Link to="/cart" className="me-4">
+              <div className="d-flex align-items-center">
+                <CartIcon />
+              </div>
+            </Link>
+          )}
 
           <button
             className="navbar-toggler shadow-none border-0 p-0"
