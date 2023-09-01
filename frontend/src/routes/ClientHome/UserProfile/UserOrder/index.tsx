@@ -3,6 +3,7 @@ import "./styles.css";
 import { useEffect, useState } from "react";
 import { OrderDTO } from "../../../../models/order";
 import { OrderItemDTO } from "../../../../models/order-item";
+import { Link } from "react-router-dom";
 import * as orderService from "../../../../services/order-service";
 import * as orderUtils from "../../../../utils/orders";
 import * as formatters from "../../../../utils/formatters";
@@ -30,20 +31,29 @@ export default function UserOrder() {
           className="row text-center border rounded p-3 ms-2 me-2 mb-4"
           key={order.id}
         >
-          <div className="col-md-3 mb-2 pb-2 info-border">
+          <div className="col-md-2 mb-2 pb-2 info-border">
             <p className="fw-bold pb-2">Pedido</p>#<span>{order.id}</span>
           </div>
-          <div className="col-md-3 mb-2 pb-2 info-border">
+          <div className="col-md-2 mb-2 pb-2 info-border">
             <p className="fw-bold pb-2">Data</p>
             <span>{formatters.formatDateToPTBR(order.moment)}</span>
           </div>
-          <div className="col-md-3 mb-2 pb-2 info-border">
+          <div className="col-md-2 mb-2 pb-2 info-border">
             <p className="fw-bold pb-2">Status</p>
             <span>{order.status}</span>
           </div>
-          <div className="col-md-3 mb-2 pb-2">
+          <div className="col-md-2 mb-2 pb-2">
             <p className="fw-bold pb-2">Total</p>
             <span>R$ {formatters.formatPrice(getTotal(order.items))}</span>
+          </div>
+          <div className="col-md-4 link-order-details">
+            <p className="fw-bold pb-2">Detalhes</p>
+            <Link
+              to={`${order.id}`}
+              className="bg-secondary p-1 rounded"
+            >
+              Visualizar
+            </Link>
           </div>
         </div>
       ))}

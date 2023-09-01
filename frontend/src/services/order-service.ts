@@ -13,6 +13,15 @@ export function getOrdersByClientRequest() {
   return requestBackend(config);
 }
 
+export function getOrderByIdRequest(orderId: number) {
+  const config: AxiosRequestConfig = {
+    url: `/api/orders/${orderId}`,
+    withCredentials: true,
+  };
+
+  return requestBackend(config);
+}
+
 export function insertOrderRequest(data: OrderDTO) {
   const config: AxiosRequestConfig = {
     method: "POST",

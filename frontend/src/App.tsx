@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { AccessTokenPayloadDTO } from "./models/auth";
 import { ContextToken } from "./utils/context-token";
 import { ContextCartCount } from "./utils/context-cart";
+import { OrderDetails } from "./routes/ClientHome/UserProfile/OrderDetails";
 import ClientHome from "./routes/ClientHome";
 import Catalog from "./routes/ClientHome/Catalog";
 import ProductDetails from "./routes/ClientHome/ProductDetails";
@@ -60,6 +61,7 @@ function App() {
                   <Route index element={<Navigate to="panel" />} />
                   <Route path="panel" element={<UserPanel />} />
                   <Route path="orders" element={<UserOrder />} />
+                  <Route path="orders/:orderId" element={<OrderDetails />} />
                   <Route path="address" element={<UserAddress />} />
                   <Route path="account" element={<UserAccount />} />
                 </Route>

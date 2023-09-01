@@ -6,7 +6,7 @@ import { ContextSearch } from "../../utils/context-search";
 import { useContext } from "react";
 
 type Props = {
-  clearSearch: boolean;
+  clearSearch?: boolean;
 };
 
 export default function ComeBack({ clearSearch }: Props) {
