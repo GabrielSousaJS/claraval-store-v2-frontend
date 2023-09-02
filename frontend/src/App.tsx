@@ -21,6 +21,8 @@ import UserAccount from "./routes/ClientHome/UserProfile/UserAccount";
 import Cart from "./routes/ClientHome/Cart";
 import PrivateRoute from "./components/PrivateRoute";
 import * as authService from "./services/auth-service";
+import Admin from "./routes/Admin";
+import AdminHome from "./routes/Admin/AdminHome";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
@@ -74,9 +76,9 @@ function App() {
                   }
                 />
               </Route>
-              <Route path="admin">
+              <Route path="admin" element={<Admin />}>
                 <Route index element={<Navigate to={"/admin/home"} />} />
-                <Route path="home" element={<>Página de administrador</>}/>
+                <Route path="home" element={<AdminHome />} />
               </Route>
               <Route path="login" element={<Login />} />
               <Route path="signup" element={<SignUp />} />

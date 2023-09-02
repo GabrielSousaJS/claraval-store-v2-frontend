@@ -1,0 +1,29 @@
+@media (max-width: 1200px) {
+  .admin-img-container img {
+    height: 400px;
+  }
+}
+
+@media (max-width: 1030px) {
+  .admin-img-container img {
+    height: 350px;
+  }
+}
+
+@media (max-width: 890px) {
+  .admin-img-container img {
+    height: 300px;
+  }
+}
+
+@media (max-width: 385px) {
+  .admin-img-container img {
+    height: 250px;
+  }
+}
+
+@media (max-width: 340px) {
+  .admin-img-container img {
+    height: 200px;
+  }
+}
