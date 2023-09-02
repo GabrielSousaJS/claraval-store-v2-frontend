@@ -74,6 +74,10 @@ function App() {
                   }
                 />
               </Route>
+              <Route path="admin">
+                <Route index element={<Navigate to={"/admin/home"} />} />
+                <Route path="home" element={<>Página de administrador</>}/>
+              </Route>
               <Route path="login" element={<Login />} />
               <Route path="signup" element={<SignUp />} />
               <Route path="*" element={<h1>Not Found</h1>} />

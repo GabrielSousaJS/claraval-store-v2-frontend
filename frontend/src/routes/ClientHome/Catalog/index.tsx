@@ -1,21 +1,27 @@
 import "./styles.css";
 
-import * as productService from "../../../services/product-service";
 import { ProductCard } from "../../../components/ProductCard";
 import { ProductDTO } from "../../../models/product";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ButtonPrimary } from "../../../components/ButtonPrimary";
 import { SpringPage } from "../../../models/vendor/spring-page";
-import Pagination from "../../../components/Pagination";
 import { ContextSearch } from "../../../utils/context-search";
+import { ContextCartCount } from "../../../utils/context-cart";
+import { OrderDTO } from "../../../models/order";
+import Pagination from "../../../components/Pagination";
 import ComeBack from "../../../components/ComeBack";
+import * as productService from "../../../services/product-service";
+import * as orderService from "../../../services/order-service";
+import * as orderUtil from "../../../utils/orders";
 
 type UrlParams = {
   categoryId: string;
 };
 
 export default function Catalog() {
+  const { setContextCartCount } = useContext(ContextCartCount);
+
   const { contextSearch, setContextSearch } = useContext(ContextSearch);
 
   const { categoryId } = useParams<UrlParams>();
@@ -26,6 +32,7 @@ export default function Catalog() {
 
   useEffect(() => {
     getProducts(0);
+    getOrder();
   }, [categoryId, contextSearch]);
 
   function getProducts(pageNumber: number) {
@@ -38,6 +45,16 @@ export default function Catalog() {
       .then((response) => {
         setPage(response.data);
       });
+  }
+
+  async function getOrder() {
+    const response = await orderService.getOrdersByClientRequest();
+    let orders: Array<OrderDTO> = response.data;
+    const openOrder = orderUtil.hasOpenOrder(orders);
+
+    if (openOrder) {
+      setContextCartCount(openOrder.items.length);
+    }
   }
 
   function handleCleanFilter() {
