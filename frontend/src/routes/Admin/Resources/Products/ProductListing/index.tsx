@@ -7,11 +7,11 @@ import ProductCrudCard from "./ProductCrudCard";
 import Pagination from "../../../../../components/Pagination";
 import * as productService from "../../../../../services/product-service";
 
-export default function ProductsList() {
+export default function ProductListing() {
   const [page, setPage] = useState<SpringPage<ProductDTO>>();
 
   useEffect(() => {
-    getProducts(3);
+    getProducts(0);
   }, []);
 
   function getProducts(pageNumber: number) {
@@ -32,7 +32,7 @@ export default function ProductsList() {
       <div className="row">
         {page?.content.map((product) => (
           <div className="col-sm-6 col-md-12" key={product.id}>
-            <ProductCrudCard product={product} />
+            <ProductCrudCard product={product} onDelete={getProducts} />
           </div>
         ))}
       </div>

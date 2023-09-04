@@ -24,8 +24,8 @@ import Admin from "./routes/Admin";
 import AdminHome from "./routes/Admin/AdminHome";
 import Resources from "./routes/Admin/Resources";
 import Products from "./routes/Admin/Resources/Products";
+import ProductListing from "./routes/Admin/Resources/Products/ProductListing";
 import * as authService from "./services/auth-service";
-import ProductsList from "./routes/Admin/Resources/Products/ProductsList";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
@@ -86,7 +86,7 @@ function App() {
                   <Route index element={<Navigate to="products" />} />
                   <Route path="products" element={<Products />}>
                     <Route index element={<Navigate to="list" />} />
-                    <Route path="list" element={<ProductsList />} />
+                    <Route path="list" element={<ProductListing />} />
                     <Route
                       path="/admin/resources/products/:productId"
                       element={<h1>Detalhes</h1>}
