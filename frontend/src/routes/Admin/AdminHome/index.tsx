@@ -17,7 +17,7 @@ export default function AdminHome() {
             trabalho!
           </p>
           <div className="text-center">
-            <Link to="" className="d-inline-block">
+            <Link to="/admin/resources" className="d-inline-block">
               <ButtonPrimary text="Acessar recursos" />
             </Link>
           </div>
