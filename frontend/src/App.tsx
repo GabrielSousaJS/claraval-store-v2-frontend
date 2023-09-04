@@ -23,7 +23,9 @@ import PrivateRoute from "./components/PrivateRoute";
 import Admin from "./routes/Admin";
 import AdminHome from "./routes/Admin/AdminHome";
 import Resources from "./routes/Admin/Resources";
+import Products from "./routes/Admin/Resources/Products";
 import * as authService from "./services/auth-service";
+import ProductsList from "./routes/Admin/Resources/Products/ProductsList";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
@@ -81,8 +83,17 @@ function App() {
                 <Route index element={<Navigate to={"/admin/home"} />} />
                 <Route path="home" element={<AdminHome />} />
                 <Route path="resources" element={<Resources />}>
-                  <Route path="products" element={<h1>Products</h1>} />
+                  <Route index element={<Navigate to="products" />} />
+                  <Route path="products" element={<Products />}>
+                    <Route index element={<Navigate to="list" />} />
+                    <Route path="list" element={<ProductsList />} />
+                    <Route
+                      path="/admin/resources/products/:productId"
+                      element={<h1>Detalhes</h1>}
+                    />
+                  </Route>
                   <Route path="categories" element={<h1>Categories</h1>} />
+                  <Route path="orders" element={<h1>Orders</h1>} />
                   <Route path="users" element={<h1>Users</h1>} />
                   <Route path="admins" element={<h1>Admins</h1>} />
                 </Route>

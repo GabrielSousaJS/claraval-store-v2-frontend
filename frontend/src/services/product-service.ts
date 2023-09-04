@@ -3,8 +3,8 @@ import { requestBackend } from "../utils/requests";
 
 export function findAllRequest(
   page: number,
-  name: string,
-  categoryId: number,
+  name?: string,
+  categoryId?: number,
   size = 12
 ) {
   const config: AxiosRequestConfig = {
