@@ -27,6 +27,9 @@ import Products from "./routes/Admin/Resources/Products";
 import ProductListing from "./routes/Admin/Resources/Products/ProductListing";
 import * as authService from "./services/auth-service";
 import ProductForm from "./routes/Admin/Resources/Products/ProductForm";
+import Categories from "./routes/Admin/Resources/Categories";
+import CategoryListing from "./routes/Admin/Resources/Categories/CategoryListing";
+import CategoryForm from "./routes/Admin/Resources/Categories/CategoryForm";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
@@ -93,7 +96,14 @@ function App() {
                       element={<ProductForm />}
                     />
                   </Route>
-                  <Route path="categories" element={<h1>Categories</h1>} />
+                  <Route path="categories" element={<Categories />}>
+                    <Route index element={<Navigate to="list" />} />
+                    <Route path="list" element={<CategoryListing />} />
+                    <Route
+                      path="/admin/resources/categories/:categoryId"
+                      element={<CategoryForm />}
+                    />
+                  </Route>
                   <Route path="orders" element={<h1>Orders</h1>} />
                   <Route path="users" element={<h1>Users</h1>} />
                   <Route path="admins" element={<h1>Admins</h1>} />
