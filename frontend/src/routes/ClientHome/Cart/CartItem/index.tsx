@@ -67,7 +67,7 @@ export default function CartItem({ id, item, onChange }: Props) {
   return (
     <div className="row p-2">
       <div className="d-flex align-items-center p-0 base-card cart-item-container">
-        <div className="col-md-3 cart-item-img p-2">
+        <div className="col-md-3 text-center p-2 cart-item-img">
           <img src={item.imgUrl} alt={item.name} />
         </div>
 
@@ -89,7 +89,10 @@ export default function CartItem({ id, item, onChange }: Props) {
           <ProductPrice price={getSubTotal()} />
         </div>
 
-        <div className="col-md-1 delete-cart ps-3 pb-3" onClick={() => handleDelete()}>
+        <div
+          className="col-md-1 delete-cart ps-3 pb-3"
+          onClick={() => handleDelete()}
+        >
           <img src={deleteIcon} alt="Remover" />
         </div>
       </div>

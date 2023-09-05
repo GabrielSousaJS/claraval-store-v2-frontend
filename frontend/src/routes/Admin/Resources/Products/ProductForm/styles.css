@@ -1,0 +1,10 @@
+.crud-textarea {
+  resize: none;
+  height: 100%;
+}
+
+@media (max-width: 992px) {
+  .crud-textarea {
+    height: 200px;
+  }
+}

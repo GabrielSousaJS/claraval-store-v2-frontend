@@ -21,7 +21,7 @@ export default function SignUp() {
       type: "text",
       placeholder: "Nome",
       validation: function (value: string) {
-        return validation.legthDefaultValidation(value);
+        return validation.lengthDefaultValidation(value);
       },
       message: "Informe um nome entre 3 a 80 caracteres",
     },
@@ -120,7 +120,7 @@ export default function SignUp() {
       type: "text",
       placeholder: "Cidade",
       validation: function (value: string) {
-        return validation.legthDefaultValidation(value);
+        return validation.lengthDefaultValidation(value);
       },
       message: "Campo inválido",
     },
@@ -131,7 +131,7 @@ export default function SignUp() {
       type: "text",
       placeholder: "Estado (UF abreviado)",
       validation: function (value: string) {
-        return validation.StateValidation(value);
+        return validation.stateValidation(value);
       },
       message: "Campo inválido",
     },
@@ -142,7 +142,7 @@ export default function SignUp() {
       type: "text",
       placeholder: "País",
       validation: function (value: string) {
-        return validation.legthDefaultValidation(value);
+        return validation.lengthDefaultValidation(value);
       },
       message: "Campo inválido",
     },

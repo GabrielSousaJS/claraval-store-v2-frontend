@@ -23,6 +23,28 @@ export function findByIdRequest(id: number) {
   return requestBackend(config);
 }
 
+export function insertRequest(data: any) {
+  const config: AxiosRequestConfig = {
+    method: "POST",
+    url: "/api/products",
+    data,
+    withCredentials: true,
+  };
+
+  return requestBackend(config);
+}
+
+export function updateRequest(data: any) {
+  const config: AxiosRequestConfig = {
+    method: "PUT",
+    url: `/api/products/${data.id}`,
+    data,
+    withCredentials: true,
+  };
+
+  return requestBackend(config);
+}
+
 export function deleteByIdRequest(id: number) {
   const config: AxiosRequestConfig = {
     method: "DELETE",

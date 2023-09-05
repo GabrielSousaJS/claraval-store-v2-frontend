@@ -71,7 +71,7 @@ export default function UserAddress() {
       type: "text",
       placeholder: "Cidade",
       validation: function (value: string) {
-        return validation.legthDefaultValidation(value);
+        return validation.lengthDefaultValidation(value);
       },
       message: "Campo inválido",
     },
@@ -82,7 +82,7 @@ export default function UserAddress() {
       type: "text",
       placeholder: "Estado (UF abreviado)",
       validation: function (value: string) {
-        return validation.StateValidation(value);
+        return validation.stateValidation(value);
       },
       message: "Campo inválido",
     },
@@ -93,7 +93,7 @@ export default function UserAddress() {
       type: "text",
       placeholder: "País",
       validation: function (value: string) {
-        return validation.legthDefaultValidation(value);
+        return validation.lengthDefaultValidation(value);
       },
       message: "Campo inválido",
     },

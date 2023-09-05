@@ -17,7 +17,7 @@ export default function SearchBar() {
     setText(event.target.value);
   }
 
-  function handleSubmit(event: any) {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setContextSearch(text);
     navigate("/");

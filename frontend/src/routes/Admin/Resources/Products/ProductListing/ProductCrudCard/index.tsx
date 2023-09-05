@@ -79,17 +79,17 @@ export default function ProductCrudCard({ product, onDelete }: Props) {
       </div>
 
       <div className="ps-3 pe-3 product-crud-buttons-container">
+        <Link to={`/admin/resources/products/${product.id}`}>
+          <button className="btn btn-outline-primary fw-bold rounded text-uppercase product-crud-button">
+            Editar
+          </button>
+        </Link>
         <button
           className="btn btn-outline-danger fw-bold rounded text-uppercase product-crud-button"
           onClick={handleDelete}
         >
           Excluir
         </button>
-        <Link to="/admin/resources/products/create">
-          <button className="btn btn-outline-primary fw-bold rounded text-uppercase product-crud-button">
-            Editar
-          </button>
-        </Link>
       </div>
 
       {dialogInfoData.visible && (

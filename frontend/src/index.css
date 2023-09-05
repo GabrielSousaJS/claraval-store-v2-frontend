@@ -6,6 +6,7 @@
   --secondary-color: #13cffc;
   --tertiary-color: #5d0288;
   --danger-color: #c51414;
+  --color-text: #263238;
 }
 
 h1,
@@ -72,6 +73,11 @@ button {
 
 .base-input[data-invalid="true"][data-dirty="true"] ~ div {
   display: unset;
+}
+
+.form-select-container {
+  padding: unset;
+  height: unset;
 }
 
 .modal-background {

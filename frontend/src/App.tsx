@@ -26,6 +26,7 @@ import Resources from "./routes/Admin/Resources";
 import Products from "./routes/Admin/Resources/Products";
 import ProductListing from "./routes/Admin/Resources/Products/ProductListing";
 import * as authService from "./services/auth-service";
+import ProductForm from "./routes/Admin/Resources/Products/ProductForm";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
@@ -89,7 +90,7 @@ function App() {
                     <Route path="list" element={<ProductListing />} />
                     <Route
                       path="/admin/resources/products/:productId"
-                      element={<h1>Detalhes</h1>}
+                      element={<ProductForm />}
                     />
                   </Route>
                   <Route path="categories" element={<h1>Categories</h1>} />

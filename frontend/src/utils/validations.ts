@@ -1,5 +1,9 @@
-export function legthDefaultValidation(value: string): boolean {
+export function lengthDefaultValidation(value: string): boolean {
   return /^.{3,80}$/.test(value);
+}
+
+export function lengthDescriptionValidation(value: string): boolean {
+  return /^.{10,}$/.test(value);
 }
 
 export function birthDateValidation(value: string): boolean {
@@ -40,8 +44,12 @@ export function neighborhoodValidation(value: string): boolean {
   return /^\S.{2}[a-zA-Z\s\d\W]*$/g.test(value);
 }
 
-export function StateValidation(value: string): boolean {
+export function stateValidation(value: string): boolean {
   return /^[A-Z]{2}$/.test(value);
+}
+
+export function urlValidation(value: string): boolean {
+  return /(https?:\/\/.*\.(?:png|jpg))/.test(value);
 }
 
 export function hasSameFields(inputs: any) {

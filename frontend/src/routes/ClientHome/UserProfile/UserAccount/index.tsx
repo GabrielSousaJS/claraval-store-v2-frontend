@@ -23,7 +23,7 @@ export default function UserAccount() {
       type: "text",
       placeholder: "Nome",
       validation: function (value: string) {
-        return validation.legthDefaultValidation(value);
+        return validation.lengthDefaultValidation(value);
       },
       message: "Informe um nome entre 3 a 80 caracteres",
     },
