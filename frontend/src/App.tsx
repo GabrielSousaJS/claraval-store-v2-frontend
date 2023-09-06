@@ -30,6 +30,8 @@ import ProductForm from "./routes/Admin/Resources/Products/ProductForm";
 import Categories from "./routes/Admin/Resources/Categories";
 import CategoryListing from "./routes/Admin/Resources/Categories/CategoryListing";
 import CategoryForm from "./routes/Admin/Resources/Categories/CategoryForm";
+import Orders from "./routes/Admin/Resources/Orders";
+import OrderListing from "./routes/Admin/Resources/Orders/OrderListing";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
@@ -104,7 +106,10 @@ function App() {
                       element={<CategoryForm />}
                     />
                   </Route>
-                  <Route path="orders" element={<h1>Orders</h1>} />
+                  <Route path="orders" element={<Orders />}>
+                    <Route index element={<Navigate to="list" />} />
+                    <Route path="list" element={<OrderListing />} />
+                  </Route>
                   <Route path="users" element={<h1>Users</h1>} />
                   <Route path="admins" element={<h1>Admins</h1>} />
                 </Route>

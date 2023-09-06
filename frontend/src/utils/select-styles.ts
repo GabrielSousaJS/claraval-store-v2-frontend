@@ -7,6 +7,7 @@ export const selectStyles = {
     "&:hover": {
       border: "none",
     },
+    cursor: "pointer",
   }),
   placeholder: (provided: any) => ({
     ...provided,
@@ -14,7 +15,8 @@ export const selectStyles = {
   }),
   option: (provided: any) => ({
     ...provided,
-    color: "var(--color-primary)",
+    color: "var(--color-text)",
+    cursor: "pointer",
   }),
   indicatorSeparator: (provided: any) => ({
     ...provided,

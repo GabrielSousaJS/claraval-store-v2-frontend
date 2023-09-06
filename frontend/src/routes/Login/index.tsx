@@ -94,7 +94,7 @@ export default function Login() {
   return (
     <main className="modal-center-box p-4 login-container">
       <div className="text-center">
-        <CompanyLogo />
+        <CompanyLogo profile="/" />
       </div>
       <h3 className="text-dark fw-light pt-4 pb-3">Login</h3>
 

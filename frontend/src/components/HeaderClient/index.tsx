@@ -22,7 +22,7 @@ export default function HeaderClient() {
   return (
     <header className="bg-primary">
       <div className="container d-flex justify-content-between align-items-center pt-4 pb-4 ps-1 pe-1">
-        <CompanyLogo />
+        <CompanyLogo profile="/" />
 
         <SearchBar />
 

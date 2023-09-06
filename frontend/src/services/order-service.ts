@@ -4,6 +4,15 @@ import { OrderItemDTO } from "../models/order-item";
 import { PaymentDTO } from "../models/payment";
 import { OrderDTO } from "../models/order";
 
+export function getAllOrdersRequest() {
+  const config: AxiosRequestConfig = {
+    url: "/api/orders/all-orders",
+    withCredentials: true,
+  };
+
+  return requestBackend(config);
+}
+
 export function getOrdersByClientRequest() {
   const config: AxiosRequestConfig = {
     url: "/api/orders/client-orders",
@@ -60,6 +69,16 @@ export function addPaymentRequest(orderId: number, payment: PaymentDTO) {
     method: "PUT",
     url: `/api/orders/payment/${orderId}`,
     data: payment,
+    withCredentials: true,
+  };
+
+  return requestBackend(config);
+}
+
+export function updateOrderStatusRequest(orderId: number, status: string) {
+  const config: AxiosRequestConfig = {
+    method: "PUT",
+    url: `/api/orders/${orderId}/status?orderStatus=${status}`,
     withCredentials: true,
   };
 

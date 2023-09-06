@@ -3,7 +3,7 @@
 }
 
 @media (max-width: 768px) {
-  .info-border {
+  .order-info-border {
     border-bottom: 1px solid #e0e0e0;
   }
 }

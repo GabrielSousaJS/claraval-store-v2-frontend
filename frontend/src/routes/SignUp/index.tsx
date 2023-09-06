@@ -242,7 +242,7 @@ export default function SignUp() {
     <main className="signup-container ps-2 pe-2">
       <div className="container p-3 base-card">
         <div className="text-center pb-4">
-          <CompanyLogo />
+          <CompanyLogo profile="/" />
         </div>
 
         <form onSubmit={handleSubmit}>
