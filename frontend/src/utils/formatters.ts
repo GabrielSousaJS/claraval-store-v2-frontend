@@ -5,6 +5,7 @@ export const formatPrice = (price: number) => {
 
 export const formatDateToISO = (date: string): string => {
   const newDate = new Date(date);
+  newDate.setHours(newDate.getHours() + 3);
   return newDate.toISOString();
 };
 
