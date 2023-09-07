@@ -1,7 +1,7 @@
 import "./styles.css";
 
-import { UserDTO } from "../../../../../../models/user";
-import * as formatters from "../../../../../../utils/formatters";
+import { UserDTO } from "../../models/user";
+import * as formatters from "../../utils/formatters";
 
 type Props = {
   user: UserDTO;

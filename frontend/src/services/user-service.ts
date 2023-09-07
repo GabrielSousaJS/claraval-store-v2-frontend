@@ -11,6 +11,15 @@ export function findAllRequest(page: number, size = 12) {
   return requestBackend(config);
 }
 
+export function findAllAdminsRequest() {
+  const config: AxiosRequestConfig = {
+    url: "/api/users/all-admins",
+    withCredentials: true,
+  };
+
+  return requestBackend(config);
+}
+
 export function getProfileRequest() {
   const config: AxiosRequestConfig = {
     url: "/api/users/profile",
@@ -25,6 +34,17 @@ export function insertClientRequest(data: any) {
     method: "POST",
     url: "/api/users",
     data,
+  };
+
+  return requestBackend(config);
+}
+
+export function insertAdminRequest(data: any) {
+  const config: AxiosRequestConfig = {
+    method: "POST",
+    url: "/api/users/add-admin",
+    data,
+    withCredentials: true,
   };
 
   return requestBackend(config);

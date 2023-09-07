@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { SpringPage } from "../../../../../models/vendor/spring-page";
 import { UserDTO } from "../../../../../models/user";
 import Pagination from "../../../../../components/Pagination";
-import UserCard from "./UserCard";
+import UserCard from "../../../../../components/UserCard";
 import * as userService from "../../../../../services/user-service";
 
 export default function UserListing() {

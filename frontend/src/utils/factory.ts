@@ -1,7 +1,7 @@
 import { OrderDTO } from "../models/order";
 import { OrderItemDTO } from "../models/order-item";
 import { ProductDTO } from "../models/product";
-import { ClientDTO, UserDTO } from "../models/user";
+import { UserMinDTO, UserDTO } from "../models/user";
 import * as formatters from "./formatters";
 
 export function createOrderItemDTO(
@@ -17,7 +17,7 @@ export function createOrderItemDTO(
   };
 }
 
-function createClientDTO(user: UserDTO): ClientDTO {
+function createClientDTO(user: UserDTO): UserMinDTO {
   return {
     id: user.id,
     name: user.name,

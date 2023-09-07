@@ -1,18 +1,16 @@
-import "./styles.css";
-
-import CompanyLogo from "../../components/CompanyLogo";
-import FormInput from "../../components/FormInput";
-import ButtonInverse from "../../components/ButtonInverse";
 import { useState } from "react";
-import { ButtonPrimary } from "../../components/ButtonPrimary";
+import { ButtonPrimary } from "../../../../../components/ButtonPrimary";
 import { useNavigate } from "react-router-dom";
-import * as forms from "../../utils/forms";
-import * as formatters from "../../utils/formatters";
-import * as validation from "../../utils/validations";
-import * as viaCepService from "../../services/viacep-service";
-import * as userService from "../../services/user-service";
+import ComeBack from "../../../../../components/ComeBack";
+import FormInput from "../../../../../components/FormInput";
+import ButtonInverse from "../../../../../components/ButtonInverse";
+import * as viaCepService from "../../../../../services/viacep-service";
+import * as formatters from "../../../../../utils/formatters";
+import * as validation from "../../../../../utils/validations";
+import * as forms from "../../../../../utils/forms";
+import * as userService from "../../../../../services/user-service";
 
-export default function SignUp() {
+export default function AdminForm() {
   const [formDataUser, setFormDataUser] = useState<any>({
     name: {
       value: "",
@@ -199,7 +197,7 @@ export default function SignUp() {
     navigate("/");
   }
 
-  function handleSubmit(event: any) {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formDataUserValidated = forms.dirtyAndValidateAll(formDataUser);
     const formDataAddressValidated = forms.dirtyAndValidateAll(formDataAddress);
@@ -219,16 +217,16 @@ export default function SignUp() {
     requestBody.address = address;
 
     return userService
-      .insertClientRequest(requestBody)
+      .insertAdminRequest(requestBody)
       .then(() => {
-        navigate("/login");
+        navigate(-1);
       })
       .catch((error) => {
-        const newInputsUser = forms.setBackendErrors(
+        const newInputUser = forms.setBackendErrors(
           formDataUserValidated,
           error.response.data.errors
         );
-        setFormDataUser(newInputsUser);
+        setFormDataUser(newInputUser);
 
         const newInputsAddress = forms.setBackendErrors(
           formDataAddressValidated,
@@ -239,12 +237,14 @@ export default function SignUp() {
   }
 
   return (
-    <main className="signup-container ps-2 pe-2">
-      <div className="container p-3 base-card">
-        <div className="text-center pb-4">
-          <CompanyLogo profile="/" />
-        </div>
-
+    <div className="ps-2 pe-2">
+      <div className="pb-4">
+        <ComeBack />
+      </div>
+      <div className="pb-4">
+        <h3 className="text-dark">Cadastro de administrador</h3>
+      </div>
+      <div className="base-card p-3">
         <form onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-md-8 pb-2">
@@ -368,6 +368,6 @@ export default function SignUp() {
           </div>
         </form>
       </div>
-    </main>
+    </div>
   );
 }

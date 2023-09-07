@@ -8,7 +8,7 @@ export type UserDTO = {
   address: AddressDTO;
 };
 
-export type ClientDTO = {
+export type UserMinDTO = {
   id: number;
   name: string;
 };

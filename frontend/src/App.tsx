@@ -33,7 +33,10 @@ import Orders from "./routes/Admin/Resources/Orders";
 import OrderListing from "./routes/Admin/Resources/Orders/OrderListing";
 import Users from "./routes/Admin/Resources/Users";
 import UserListing from "./routes/Admin/Resources/Users/UserListing";
+import UsersAdmin from "./routes/Admin/Resources/UsersAdmin";
+import AdminListing from "./routes/Admin/Resources/UsersAdmin/AdminListing";
 import * as authService from "./services/auth-service";
+import AdminForm from "./routes/Admin/Resources/UsersAdmin/AdminForm";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
@@ -116,7 +119,14 @@ function App() {
                     <Route index element={<Navigate to="list" />} />
                     <Route path="list" element={<UserListing />} />
                   </Route>
-                  <Route path="admins" element={<h1>Admins</h1>} />
+                  <Route path="admins" element={<UsersAdmin />}>
+                    <Route index element={<Navigate to="list" />} />
+                    <Route path="list" element={<AdminListing />} />
+                    <Route
+                      path="/admin/resources/admins/create"
+                      element={<AdminForm />}
+                    />
+                  </Route>
                 </Route>
               </Route>
               <Route path="login" element={<Login />} />
