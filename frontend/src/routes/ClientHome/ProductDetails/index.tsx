@@ -86,18 +86,18 @@ export default function ProductDetails() {
     }
   }
 
-  async function addItemToOrder(orderItem: OrderItemDTO) {
+  function addItemToOrder(orderItem: OrderItemDTO) {
     if (order?.id) {
-      await orderService.addItemToOrderRequest(order.id, orderItem).then(() => {
+      orderService.addItemToOrderRequest(order.id, orderItem).then(() => {
         setContextCartCount(contextCartCount + 1);
       });
     }
   }
 
-  async function createOrderAndAddItem(orderItem: OrderItemDTO) {
+  function createOrderAndAddItem(orderItem: OrderItemDTO) {
     const order = factory.createOrderDTO(user!);
     order.items.push(orderItem);
-    await orderService.insertOrderRequest(order).then(() => {
+    orderService.insertOrderRequest(order).then(() => {
       setContextCartCount(contextCartCount + 1);
     });
   }

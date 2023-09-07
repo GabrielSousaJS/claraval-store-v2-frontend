@@ -4,22 +4,23 @@ import { OrderItemDTO } from "../models/order-item";
 import { PaymentDTO } from "../models/payment";
 import { OrderDTO } from "../models/order";
 
-export function getAllOrdersRequest() {
+export function getAllOrdersRequest(page: number, size = 12) {
   const config: AxiosRequestConfig = {
     url: "/api/orders/all-orders",
+    params: { page, size },
     withCredentials: true,
   };
 
   return requestBackend(config);
 }
 
-export function getOrdersByClientRequest() {
+export async function getOrdersByClientRequest() {
   const config: AxiosRequestConfig = {
     url: "/api/orders/client-orders",
     withCredentials: true,
   };
 
-  return requestBackend(config);
+  return await requestBackend(config);
 }
 
 export function getOrderByIdRequest(orderId: number) {

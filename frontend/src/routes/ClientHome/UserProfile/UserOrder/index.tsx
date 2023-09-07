@@ -13,7 +13,7 @@ export default function UserOrder() {
 
   useEffect(() => {
     orderService.getOrdersByClientRequest().then((response) => {
-      const ordersClosed = orderUtils.hasCloseOrder(response.data);
+      const ordersClosed = orderUtils.hasClosedOrders(response.data);
       setOrders(ordersClosed);
     });
   }, []);
