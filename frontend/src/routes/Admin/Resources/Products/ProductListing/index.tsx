@@ -21,7 +21,7 @@ export default function ProductListing() {
   }
 
   return (
-    <section className="ps-2 pe-2">
+    <div className="ps-2 pe-2">
       <div className="d-flex justify-content-between pb-4">
         <h1 className="pe-4 text-dark">Lista de produtos</h1>
         <Link to="/admin/resources/products/create">
@@ -44,6 +44,6 @@ export default function ProductListing() {
           onChange={getProducts}
         />
       )}
-    </section>
+    </div>
   );
 }

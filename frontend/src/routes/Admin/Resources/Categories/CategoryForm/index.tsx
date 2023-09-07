@@ -86,7 +86,7 @@ export default function CategoryForm() {
   }
 
   return (
-    <section className="ps-2 pe-2">
+    <div className="ps-2 pe-2">
       <div className="pb-4">
         <ComeBack />
       </div>
@@ -120,6 +120,6 @@ export default function CategoryForm() {
           </div>
         </form>
       </div>
-    </section>
+    </div>
   );
 }

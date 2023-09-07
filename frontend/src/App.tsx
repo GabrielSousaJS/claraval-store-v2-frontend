@@ -25,13 +25,15 @@ import AdminHome from "./routes/Admin/AdminHome";
 import Resources from "./routes/Admin/Resources";
 import Products from "./routes/Admin/Resources/Products";
 import ProductListing from "./routes/Admin/Resources/Products/ProductListing";
-import * as authService from "./services/auth-service";
 import ProductForm from "./routes/Admin/Resources/Products/ProductForm";
 import Categories from "./routes/Admin/Resources/Categories";
 import CategoryListing from "./routes/Admin/Resources/Categories/CategoryListing";
 import CategoryForm from "./routes/Admin/Resources/Categories/CategoryForm";
 import Orders from "./routes/Admin/Resources/Orders";
 import OrderListing from "./routes/Admin/Resources/Orders/OrderListing";
+import Users from "./routes/Admin/Resources/Users";
+import UserListing from "./routes/Admin/Resources/Users/UserListing";
+import * as authService from "./services/auth-service";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
@@ -110,7 +112,10 @@ function App() {
                     <Route index element={<Navigate to="list" />} />
                     <Route path="list" element={<OrderListing />} />
                   </Route>
-                  <Route path="users" element={<h1>Users</h1>} />
+                  <Route path="users" element={<Users />}>
+                    <Route index element={<Navigate to="list" />} />
+                    <Route path="list" element={<UserListing />} />
+                  </Route>
                   <Route path="admins" element={<h1>Admins</h1>} />
                 </Route>
               </Route>

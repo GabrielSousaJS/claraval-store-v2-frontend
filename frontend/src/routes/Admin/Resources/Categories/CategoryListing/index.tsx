@@ -20,7 +20,7 @@ export default function CategoryListing() {
   }
 
   return (
-    <section className="ps-2 pe-2">
+    <div className="ps-2 pe-2">
       <div className="d-flex justify-content-between pb-4">
         <h1 className="pe-4 text-dark">Lista de categorias</h1>
         <Link to="/admin/resources/categories/create">
@@ -35,6 +35,6 @@ export default function CategoryListing() {
           </div>
         ))}
       </div>
-    </section>
+    </div>
   );
 }

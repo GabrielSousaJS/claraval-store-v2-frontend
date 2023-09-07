@@ -38,7 +38,7 @@ export default function OrderListing() {
   }
 
   return (
-    <section className="ps-2 pe-2">
+    <div className="ps-2 pe-2">
       <h1 className="text-dark pb-4">Listagem de pedidos</h1>
 
       <div className="row ps-2 pe-2">
@@ -54,6 +54,6 @@ export default function OrderListing() {
           onDialogClose={handleDialogInfoClose}
         />
       )}
-    </section>
+    </div>
   );
 }

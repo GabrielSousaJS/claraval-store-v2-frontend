@@ -1,6 +1,16 @@
 import { AxiosRequestConfig } from "axios";
 import { requestBackend } from "../utils/requests";
 
+export function findAllRequest(page: number, size = 12) {
+  const config: AxiosRequestConfig = {
+    url: "/api/users",
+    params: { page, size },
+    withCredentials: true,
+  };
+
+  return requestBackend(config);
+}
+
 export function getProfileRequest() {
   const config: AxiosRequestConfig = {
     url: "/api/users/profile",

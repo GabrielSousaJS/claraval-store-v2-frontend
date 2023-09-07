@@ -155,7 +155,7 @@ export default function ProductForm() {
   }
 
   return (
-    <section className="ps-2 pe-2">
+    <div className="ps-2 pe-2">
       <div className="pb-4">
         <ComeBack />
       </div>
@@ -248,6 +248,6 @@ export default function ProductForm() {
           </div>
         </form>
       </div>
-    </section>
+    </div>
   );
 }
