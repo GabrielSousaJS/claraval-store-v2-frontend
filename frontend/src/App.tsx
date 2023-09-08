@@ -35,8 +35,8 @@ import Users from "./routes/Admin/Resources/Users";
 import UserListing from "./routes/Admin/Resources/Users/UserListing";
 import UsersAdmin from "./routes/Admin/Resources/UsersAdmin";
 import AdminListing from "./routes/Admin/Resources/UsersAdmin/AdminListing";
-import * as authService from "./services/auth-service";
 import AdminForm from "./routes/Admin/Resources/UsersAdmin/AdminForm";
+import * as authService from "./services/auth-service";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =

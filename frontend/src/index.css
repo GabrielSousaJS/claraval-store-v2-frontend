@@ -96,6 +96,16 @@ button {
   width: 280px;
   height: 100vh;
   background-color: #fff;
+  overflow: scroll;
+}
+
+.modal-box::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.modal-box::-webkit-scrollbar-thumb {
+  background-color: transparent;
 }
 
 .modal-center-box {
