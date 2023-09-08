@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import ComeBack from "../../../../../components/ComeBack";
 import FormInput from "../../../../../components/FormInput";
 import ButtonInverse from "../../../../../components/ButtonInverse";
+import FormPassword from "../../../../../components/FormPassword";
 import * as viaCepService from "../../../../../services/viacep-service";
 import * as formatters from "../../../../../utils/formatters";
 import * as validation from "../../../../../utils/validations";
@@ -192,9 +193,14 @@ export default function AdminForm() {
     });
   }
 
+  function handleChangeType(event: any) {
+    event.preventDefault();
+    setFormDataUser(forms.changeType(formDataUser, "password"));
+  }
+
   function handleCancelClick(event: any) {
     event.preventDefault();
-    navigate("/");
+    navigate(-1);
   }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -275,11 +281,12 @@ export default function AdminForm() {
               <div className="form-error">{formDataUser.email.message}</div>
             </div>
             <div className="col-sm-12 pb-2">
-              <FormInput
+              <FormPassword
                 {...formDataUser.password}
                 className="form-control base-input"
                 onTurnDirty={handleTurnDirtyUser}
                 onChange={handleInputChangeUser}
+                onChangeType={handleChangeType}
               />
               <div className="form-error">{formDataUser.password.message}</div>
             </div>

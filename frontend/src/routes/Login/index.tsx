@@ -2,6 +2,7 @@ import "./styles.css";
 
 import CompanyLogo from "../../components/CompanyLogo";
 import FormInput from "../../components/FormInput";
+import FormPassword from "../../components/FormPassword";
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ButtonPrimary } from "../../components/ButtonPrimary";
@@ -58,6 +59,11 @@ export default function Login() {
     setFormData(forms.dirtyAndValidate(formData, name));
   }
 
+  function handleChangeType(event: any) {
+    event.preventDefault();
+    setFormData(forms.changeType(formData, "password"));
+  }
+
   function handleSubmit(event: any) {
     event.preventDefault();
 
@@ -106,7 +112,7 @@ export default function Login() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit}>
+      <form>
         <div className="pt-3">
           <FormInput
             {...formData.username}
@@ -118,16 +124,17 @@ export default function Login() {
         </div>
 
         <div className="pt-3">
-          <FormInput
+          <FormPassword
             {...formData.password}
             className="form-control base-input"
             onChange={handleInputChange}
             onTurnDirty={handleTurnDirty}
+            onChangeType={handleChangeType}
           />
           <div className="form-error">{formData.password.message}</div>
         </div>
 
-        <div className="pt-3">
+        <div onClick={handleSubmit} className="pt-3">
           <ButtonPrimary text="Continuar" />
         </div>
 

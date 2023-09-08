@@ -3,6 +3,7 @@ import "./styles.css";
 import CompanyLogo from "../../components/CompanyLogo";
 import FormInput from "../../components/FormInput";
 import ButtonInverse from "../../components/ButtonInverse";
+import FormPassword from "../../components/FormPassword";
 import { useState } from "react";
 import { ButtonPrimary } from "../../components/ButtonPrimary";
 import { useNavigate } from "react-router-dom";
@@ -194,6 +195,11 @@ export default function SignUp() {
     });
   }
 
+  function handleChangeType(event: any) {
+    event.preventDefault();
+    setFormDataUser(forms.changeType(formDataUser, "password"));
+  }
+
   function handleCancelClick(event: any) {
     event.preventDefault();
     navigate("/");
@@ -275,11 +281,12 @@ export default function SignUp() {
               <div className="form-error">{formDataUser.email.message}</div>
             </div>
             <div className="col-sm-12 pb-2">
-              <FormInput
+              <FormPassword
                 {...formDataUser.password}
                 className="form-control base-input"
                 onTurnDirty={handleTurnDirtyUser}
                 onChange={handleInputChangeUser}
+                onChangeType={handleChangeType}
               />
               <div className="form-error">{formDataUser.password.message}</div>
             </div>

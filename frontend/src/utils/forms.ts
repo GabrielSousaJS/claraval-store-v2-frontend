@@ -100,6 +100,14 @@ export function hasAnyInvalid(inputs: any) {
   return false;
 }
 
+export function changeType(inputs: any, name: string) {
+  if (inputs[name].type === "password") {
+    return { ...inputs, [name]: { ...inputs[name], type: "text" } };
+  } else {
+    return { ...inputs, [name]: { ...inputs[name], type: "password" } };
+  }
+}
+
 export function cepToFormAddress(inputs: any, cep: CepDTO) {
   inputs.cep.value = cep.cep;
   inputs.street.value = cep.logradouro;

@@ -7,6 +7,7 @@ import { ButtonPrimary } from "../../../../components/ButtonPrimary";
 import { UserDTO } from "../../../../models/user";
 import FormInput from "../../../../components/FormInput";
 import DialogInfo from "../../../../components/DialogInfo";
+import FormPassword from "../../../../components/FormPassword";
 import * as validation from "../../../../utils/validations";
 import * as forms from "../../../../utils/forms";
 import * as userService from "../../../../services/user-service";
@@ -135,6 +136,23 @@ export default function UserAccount() {
     setFormDataPassword(forms.dirtyAndValidate(formDataPassword, name));
   }
 
+  function handleChangeTypeOldPassword(event: any) {
+    event.preventDefault();
+    setFormDataPassword(forms.changeType(formDataPassword, "oldPassword"));
+  }
+
+  function handleChangeTypeNewPassword(event: any) {
+    event.preventDefault();
+    setFormDataPassword(forms.changeType(formDataPassword, "newPassword"));
+  }
+
+  function handleChangeTypeNewConfirmationPassword(event: any) {
+    event.preventDefault();
+    setFormDataPassword(
+      forms.changeType(formDataPassword, "newConfirmationPassword")
+    );
+  }
+
   function handleSubmit(event: any) {
     event.preventDefault();
 
@@ -235,11 +253,12 @@ export default function UserAccount() {
 
         <div className="col-12 pb-3">
           <p className="text-dark fw-bold">Senha atual</p>
-          <FormInput
+          <FormPassword
             {...formDataPassword.oldPassword}
             className="form-control base-input"
             onTurnDirty={handleTurnDirtyPassword}
             onChange={handleInputChangePassword}
+            onChangeType={handleChangeTypeOldPassword}
           />
           <div className="form-error">
             {formDataPassword.oldPassword.message}
@@ -247,11 +266,12 @@ export default function UserAccount() {
         </div>
         <div className="col-12 pb-4">
           <p className="text-dark fw-bold">Nova senha</p>
-          <FormInput
+          <FormPassword
             {...formDataPassword.newPassword}
             className="form-control base-input"
             onTurnDirty={handleTurnDirtyPassword}
             onChange={handleInputChangePassword}
+            onChangeType={handleChangeTypeNewPassword}
           />
           <div className="form-error">
             {formDataPassword.newPassword.message}
@@ -259,11 +279,12 @@ export default function UserAccount() {
         </div>
         <div className="col-12 pb-3">
           <p className="text-dark fw-bold">Confirmar senha</p>
-          <FormInput
+          <FormPassword
             {...formDataPassword.newConfirmationPassword}
             className="form-control base-input"
             onTurnDirty={handleTurnDirtyPassword}
             onChange={handleInputChangePassword}
+            onChangeType={handleChangeTypeNewConfirmationPassword}
           />
           <div className="form-error">
             {formDataPassword.newConfirmationPassword.message}

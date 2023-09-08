@@ -3,8 +3,8 @@ import "./styles.css";
 import { useContext, useState } from "react";
 import { ContextSearch } from "../../../utils/context-search";
 import { useNavigate } from "react-router-dom";
-import searchIcon from "../../../assets/icons/search.svg";
-import cancelIcon from "../../../assets/icons/cancel.svg";
+import searchIcon from "../../../assets/icons/searchIcon.svg";
+import cancelIcon from "../../../assets/icons/cancelIcon.svg";
 
 export default function SearchBar() {
   const { setContextSearch } = useContext(ContextSearch);
