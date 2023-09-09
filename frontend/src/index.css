@@ -118,6 +118,15 @@ button {
   width: 900px;
 }
 
+.modal-search-box {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 108px;
+  background-color: var(--primary-color);
+}
+
 ::-webkit-calendar-picker-indicator {
   cursor: pointer;
 }

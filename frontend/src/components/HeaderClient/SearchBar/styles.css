@@ -1,5 +1,4 @@
 .search-bar {
-  width: 40%;
   border-radius: 10px;
   background: #1e0848;
 
@@ -8,7 +7,6 @@
 
 .search-bar input {
   background: none;
-  border: none;
   outline: none;
 
   width: 95%;

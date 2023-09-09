@@ -11,6 +11,7 @@ import { removeAuthData } from "../../../localStorage/access-token-repository";
 import { ContextCartCount } from "../../../utils/context-cart";
 import * as categoryService from "../../../services/category-service";
 import * as userService from "../../../services/user-service";
+import * as authService from "../../../services/auth-service";
 
 type Props = {
   onMenuBarClose: Function;
@@ -77,6 +78,22 @@ export default function MenuBar({ onMenuBarClose }: Props) {
         </div>
         <nav className="p-3">
           <ul className="fw-semibold menu-bar-items">
+            <div className="admin-cart-container">
+              {authService.isAuthenticated() &&
+                authService.hasAnyRole(["ROLE_ADMIN"]) && (
+                  <NavLink to="/admin">
+                    <li className="pt-3 pb-3">Área administrativa</li>
+                  </NavLink>
+                )}
+
+              {authService.isAuthenticated() && (
+                <NavLink to="/cart">
+                  <li className="pt-3 pb-3" onClick={() => onMenuBarClose()}>
+                    Carrinho
+                  </li>
+                </NavLink>
+              )}
+            </div>
             {categories.map((category) => (
               <NavLink to={`catalog/${category.id}`} key={category.id}>
                 <li className="pt-3 pb-3" onClick={() => onMenuBarClose()}>

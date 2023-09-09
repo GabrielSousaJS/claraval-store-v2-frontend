@@ -1,15 +1,21 @@
+import "./styles.css";
+
 import togglerIcon from "../../assets/icons/togglerIcon.svg";
 import SearchBar from "./SearchBar";
 import MenuBar from "./MenuBar";
 import CompanyLogo from "../CompanyLogo";
 import CartIcon from "../CartIcon";
 import adminIcon from "../../assets/icons/adminIcon.svg";
+import searchIcon from "../../assets/icons/searchIcon.svg";
+import SearchModal from "./SearchModal";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import * as authService from "../../services/auth-service";
 
 export default function HeaderClient() {
   const [menuBar, setMenuBar] = useState(false);
+
+  const [searchBar, setSearchBar] = useState(false);
 
   function handleMenuBarOpen() {
     setMenuBar(true);
@@ -19,17 +25,33 @@ export default function HeaderClient() {
     setMenuBar(false);
   }
 
+  function handleSearchBarOpen() {
+    setSearchBar(true);
+  }
+
+  function handleSearchBarClose() {
+    setSearchBar(false);
+  }
+
   return (
     <header className="bg-primary">
-      <div className="container d-flex justify-content-between align-items-center pt-4 pb-4 ps-1 pe-1">
-        <CompanyLogo profile="/" />
+      <div className="container d-flex justify-content-between align-items-center pt-4 pb-4 ps-2 pe-2">
+        <div className="company-logo-container">
+          <CompanyLogo profile="/" />
+        </div>
 
-        <SearchBar />
+        <div className="search-bar-container">
+          <SearchBar />
+        </div>
 
-        <div className="d-flex">
+        <div onClick={handleSearchBarOpen} className="search-button-container">
+          <img src={searchIcon} alt="Pesquisar" />
+        </div>
+
+        <div className="d-flex buttons-container">
           {authService.isAuthenticated() &&
             authService.hasAnyRole(["ROLE_ADMIN"]) && (
-              <Link to="/admin" className="me-4">
+              <Link to="/admin" className="me-4 display-control">
                 <div className="d-flex align-items-center">
                   <img src={adminIcon} alt="Área administrativa" />
                 </div>
@@ -37,7 +59,7 @@ export default function HeaderClient() {
             )}
 
           {authService.isAuthenticated() && (
-            <Link to="/cart" className="me-4">
+            <Link to="/cart" className="me-4 display-control">
               <div className="d-flex align-items-center">
                 <CartIcon />
               </div>
@@ -55,6 +77,7 @@ export default function HeaderClient() {
       </div>
 
       {menuBar && <MenuBar onMenuBarClose={handleMenuBarClose} />}
+      {searchBar && <SearchModal onSearchModalClose={handleSearchBarClose} />}
     </header>
   );
 }

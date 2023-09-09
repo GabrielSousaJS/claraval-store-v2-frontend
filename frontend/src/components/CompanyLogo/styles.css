@@ -7,4 +7,8 @@
   .container-logo a {
     height: 40px;
   }
+
+  .container-logo img {
+    height: 50px;
+  }
 }

@@ -12,3 +12,13 @@
   border-bottom: 1px solid #e1e1e1;
   cursor: pointer;
 }
+
+.admin-cart-container {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .admin-cart-container {
+    display: unset;
+  }
+}
