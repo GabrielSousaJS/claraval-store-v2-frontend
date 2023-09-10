@@ -28,6 +28,26 @@ export function loginRequest(loginData: CredentialsDTO) {
   return requestBackend(config);
 }
 
+export function createRecoverTokenRequest(data: any) {
+  const config: AxiosRequestConfig = {
+    method: "POST",
+    url: "/api/auth/recover-token",
+    data,
+  };
+
+  return requestBackend(config);
+}
+
+export function saveNewPasswordRequest(data: any) {
+  const config: AxiosRequestConfig = {
+    method: "PUT",
+    url: "/api/auth/new-password",
+    data,
+  };
+
+  return requestBackend(config);
+}
+
 export function saveAccessToken(token: string) {
   accessTokenRepository.saveAuthData(token);
 }

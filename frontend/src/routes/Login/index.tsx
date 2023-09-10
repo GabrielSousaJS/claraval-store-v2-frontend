@@ -12,6 +12,7 @@ import * as forms from "../../utils/forms";
 import * as authService from "../../services/auth-service";
 import * as orderService from "../../services/order-service";
 import * as orderUtils from "../../utils/orders";
+import * as validation from "../../utils/validations";
 
 export default function Login() {
   const { setContextTokenPayload } = useContext(ContextToken);
@@ -30,9 +31,7 @@ export default function Login() {
       type: "text",
       placeholder: "E-mail",
       validation: function (value: string) {
-        return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
-          value.toLowerCase()
-        );
+        return validation.emailValidation(value);
       },
       message: "Por favor, digite um email válido",
     },
@@ -132,6 +131,10 @@ export default function Login() {
             onChangeType={handleChangeType}
           />
           <div className="form-error">{formData.password.message}</div>
+        </div>
+
+        <div className="pt-3 text-end">
+          <Link to={"/recover-password"}>Perdeu sua senha?</Link>
         </div>
 
         <div onClick={handleSubmit} className="pt-3">

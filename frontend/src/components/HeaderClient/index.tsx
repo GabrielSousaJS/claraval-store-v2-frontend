@@ -35,7 +35,7 @@ export default function HeaderClient() {
 
   return (
     <header className="bg-primary">
-      <div className="container d-flex justify-content-between align-items-center pt-4 pb-4 ps-2 pe-2">
+      <div className="container d-flex justify-content-between align-items-center pt-4 pb-4 ps-3 pe-3">
         <div className="company-logo-container">
           <CompanyLogo profile="/" />
         </div>

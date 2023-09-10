@@ -1,0 +1,20 @@
+.recover-password-container {
+  width: 50%;
+}
+
+.form-recover-password-error {
+  background: #fb5555;
+  border-radius: 15px;
+}
+
+@media (max-width: 992px) {
+  .recover-password-container {
+    width: 70%;
+  }
+}
+
+@media (max-width: 576px) {
+  .recover-password-container {
+    width: 90%;
+  }
+}

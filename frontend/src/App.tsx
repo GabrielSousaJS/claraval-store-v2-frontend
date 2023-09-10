@@ -36,6 +36,9 @@ import UserListing from "./routes/Admin/Resources/Users/UserListing";
 import UsersAdmin from "./routes/Admin/Resources/UsersAdmin";
 import AdminListing from "./routes/Admin/Resources/UsersAdmin/AdminListing";
 import AdminForm from "./routes/Admin/Resources/UsersAdmin/AdminForm";
+import PasswordRecover from "./routes/PasswordRecover";
+import Email from "./routes/PasswordRecover/Email";
+import Password from "./routes/PasswordRecover/Password";
 import * as authService from "./services/auth-service";
 
 function App() {
@@ -131,6 +134,11 @@ function App() {
               </Route>
               <Route path="login" element={<Login />} />
               <Route path="signup" element={<SignUp />} />
+              <Route path="recover-password" element={<PasswordRecover />}>
+                <Route index element={<Navigate to="email" />} />
+                <Route path="email" element={<Email />} />
+                <Route path="password/:token" element={<Password />} />
+              </Route>
               <Route path="*" element={<h1>Not Found</h1>} />
             </Routes>
           </BrowserRouter>
