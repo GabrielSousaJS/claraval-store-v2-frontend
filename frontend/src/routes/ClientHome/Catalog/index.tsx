@@ -9,8 +9,10 @@ import { SpringPage } from "../../../models/vendor/spring-page";
 import { ContextSearch } from "../../../utils/context-search";
 import { ContextCartCount } from "../../../utils/context-cart";
 import { OrderDTO } from "../../../models/order";
+import { ContextToken } from "../../../utils/context-token";
 import Pagination from "../../../components/Pagination";
 import ComeBack from "../../../components/ComeBack";
+import CatalogLoader from "./CatalogLoader";
 import * as productService from "../../../services/product-service";
 import * as orderService from "../../../services/order-service";
 import * as orderUtil from "../../../utils/orders";
@@ -20,6 +22,8 @@ type UrlParams = {
 };
 
 export default function Catalog() {
+  const { contextTokenPayload } = useContext(ContextToken);
+
   const { setContextCartCount } = useContext(ContextCartCount);
 
   const { contextSearch, setContextSearch } = useContext(ContextSearch);
@@ -28,14 +32,19 @@ export default function Catalog() {
 
   const [page, setPage] = useState<SpringPage<ProductDTO>>();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     getProducts(0);
-    getOrder();
+    if (contextTokenPayload) {
+      getOrder();
+    }
   }, [categoryId, contextSearch]);
 
   function getProducts(pageNumber: number) {
+    setIsLoading(true);
     productService
       .findAllRequest(
         pageNumber,
@@ -44,6 +53,9 @@ export default function Catalog() {
       )
       .then((response) => {
         setPage(response.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
@@ -84,15 +96,19 @@ export default function Catalog() {
         )}
       </div>
       <div className="row pt-4 pb-4">
-        {page?.content.map((product) => (
-          <div
-            className="col-sm-6 col-lg-4 col-xl-3"
-            key={product.id}
-            onClick={() => handleClick(product.id)}
-          >
-            <ProductCard product={product} />
-          </div>
-        ))}
+        {isLoading ? (
+          <CatalogLoader />
+        ) : (
+          page?.content.map((product) => (
+            <div
+              className="col-sm-6 col-lg-4 col-xl-3"
+              key={product.id}
+              onClick={() => handleClick(product.id)}
+            >
+              <ProductCard product={product} />
+            </div>
+          ))
+        )}
       </div>
 
       {page?.content.length !== 0 && (

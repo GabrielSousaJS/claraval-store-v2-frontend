@@ -1,12 +1,14 @@
+import CategoryCrudCard from "./CategoryCrudCard";
+import Loader from "../../../../../components/Loader";
 import { Link } from "react-router-dom";
 import { ButtonPrimary } from "../../../../../components/ButtonPrimary";
 import { useEffect, useState } from "react";
 import { CategoryDTO } from "../../../../../models/category";
 import * as categoryService from "../../../../../services/category-service";
 
-import CategoryCrudCard from "./CategoryCrudCard";
-
 export default function CategoryListing() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const [categories, setCategories] = useState<CategoryDTO[]>([]);
 
   useEffect(() => {
@@ -14,9 +16,15 @@ export default function CategoryListing() {
   }, []);
 
   function getCategories() {
-    categoryService.findAllRequest().then((response) => {
-      setCategories(response.data);
-    });
+    setIsLoading(true);
+    categoryService
+      .findAllRequest()
+      .then((response) => {
+        setCategories(response.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   return (
@@ -29,11 +37,15 @@ export default function CategoryListing() {
       </div>
 
       <div className="row">
-        {categories.map((category) => (
-          <div className="col-lg-6" key={category.id}>
-            <CategoryCrudCard category={category} onDelete={getCategories} />
-          </div>
-        ))}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          categories.map((category) => (
+            <div className="col-lg-6" key={category.id}>
+              <CategoryCrudCard category={category} onDelete={getCategories} />
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

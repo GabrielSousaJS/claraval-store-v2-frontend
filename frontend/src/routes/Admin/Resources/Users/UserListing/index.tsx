@@ -3,9 +3,12 @@ import { SpringPage } from "../../../../../models/vendor/spring-page";
 import { UserDTO } from "../../../../../models/user";
 import Pagination from "../../../../../components/Pagination";
 import UserCard from "../../../../../components/UserCard";
+import Loader from "../../../../../components/Loader";
 import * as userService from "../../../../../services/user-service";
 
 export default function UserListing() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const [page, setPage] = useState<SpringPage<UserDTO>>();
 
   useEffect(() => {
@@ -13,9 +16,15 @@ export default function UserListing() {
   }, []);
 
   function getUsers(pageNumber: number) {
-    userService.findAllRequest(pageNumber).then((response) => {
-      setPage(response.data);
-    });
+    setIsLoading(true);
+    userService
+      .findAllRequest(pageNumber)
+      .then((response) => {
+        setPage(response.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   return (
@@ -23,11 +32,15 @@ export default function UserListing() {
       <h1 className="text-dark pb-4">Lista de usuários</h1>
 
       <div className="row ps-2 pe-2">
-        {page?.content.map((user) => (
-          <div className="col-12 pb-4" key={user.id}>
-            <UserCard user={user} />
-          </div>
-        ))}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          page?.content.map((user) => (
+            <div className="col-12 pb-4" key={user.id}>
+              <UserCard user={user} />
+            </div>
+          ))
+        )}
       </div>
 
       {page?.content.length !== 0 && (

@@ -99,7 +99,7 @@ export default function Email() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit}>
+        <form>
           <div className="pt-3">
             <FormInput
               {...formData.email}
@@ -114,7 +114,7 @@ export default function Email() {
             <div onClick={handleCancel}>
               <ButtonInverse text="Cancelar" />
             </div>
-            <div>
+            <div onClick={handleSubmit}>
               <ButtonPrimary text="Enviar" />
             </div>
           </div>

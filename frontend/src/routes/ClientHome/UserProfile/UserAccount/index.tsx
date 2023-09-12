@@ -8,6 +8,7 @@ import { UserDTO } from "../../../../models/user";
 import FormInput from "../../../../components/FormInput";
 import DialogInfo from "../../../../components/DialogInfo";
 import FormPassword from "../../../../components/FormPassword";
+import Loader from "../../../../components/Loader";
 import * as validation from "../../../../utils/validations";
 import * as forms from "../../../../utils/forms";
 import * as userService from "../../../../services/user-service";
@@ -87,6 +88,8 @@ export default function UserAccount() {
     },
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [dialogInfo, setDialogInfo] = useState({
     visible: false,
     message: "Faça o login novamente devido as alterações realizadas",
@@ -99,13 +102,19 @@ export default function UserAccount() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    userService.getProfileRequest().then((response) => {
-      setUser(response.data);
-      response.data.birthDate = formatters.formatDateToUS(
-        response.data.birthDate
-      );
-      setFormDataUser(forms.updateAll(formDataUser, response.data));
-    });
+    setIsLoading(true);
+    userService
+      .getProfileRequest()
+      .then((response) => {
+        setUser(response.data);
+        response.data.birthDate = formatters.formatDateToUS(
+          response.data.birthDate
+        );
+        setFormDataUser(forms.updateAll(formDataUser, response.data));
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   function handleInputChangeUser(event: any) {
@@ -209,94 +218,98 @@ export default function UserAccount() {
 
   return (
     <section className="base-card p-3 ms-2 me-2">
-      <form onSubmit={handleSubmit}>
-        <div className="row">
-          <div className="col-md-8 pb-2">
-            <FormInput
-              {...formDataUser.name}
-              className="form-control base-input"
-              onTurnDirty={handleTurnDirtyUser}
-              onChange={handleInputChangeUser}
-            />
-            <div className="form-error">{formDataUser.name.message}</div>
-          </div>
-          <div className="col-md-4 pb-2">
-            <FormInput
-              {...formDataUser.birthDate}
-              className="form-control base-input"
-              onTurnDirty={handleTurnDirtyUser}
-              onChange={handleInputChangeUser}
-            />
-            <div className="form-error">{formDataUser.birthDate.message}</div>
-          </div>
-          <div className="col-12 pb-4">
-            <FormInput
-              {...formDataUser.email}
-              disabled
-              className="form-control base-input"
-              onTurnDirty={handleTurnDirtyUser}
-              onChange={handleInputChangeUser}
-            />
-            <div className="form-error">{formDataUser.email.message}</div>
-          </div>
-        </div>
-
-        <h4 className="pb-3">Alteração de senha</h4>
-
-        {submitResponseFail && (
-          <div className="text-center pb-3">
-            <div className="d-inline-flex p-3 fw-bold form-password-error">
-              A senha atual está incorreta, verifique e tente novamente.
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <div className="row">
+            <div className="col-md-8 pb-2">
+              <FormInput
+                {...formDataUser.name}
+                className="form-control base-input"
+                onTurnDirty={handleTurnDirtyUser}
+                onChange={handleInputChangeUser}
+              />
+              <div className="form-error">{formDataUser.name.message}</div>
+            </div>
+            <div className="col-md-4 pb-2">
+              <FormInput
+                {...formDataUser.birthDate}
+                className="form-control base-input"
+                onTurnDirty={handleTurnDirtyUser}
+                onChange={handleInputChangeUser}
+              />
+              <div className="form-error">{formDataUser.birthDate.message}</div>
+            </div>
+            <div className="col-12 pb-4">
+              <FormInput
+                {...formDataUser.email}
+                disabled
+                className="form-control base-input"
+                onTurnDirty={handleTurnDirtyUser}
+                onChange={handleInputChangeUser}
+              />
+              <div className="form-error">{formDataUser.email.message}</div>
             </div>
           </div>
-        )}
 
-        <div className="col-12 pb-3">
-          <p className="text-dark fw-bold">Senha atual</p>
-          <FormPassword
-            {...formDataPassword.oldPassword}
-            className="form-control base-input"
-            onTurnDirty={handleTurnDirtyPassword}
-            onChange={handleInputChangePassword}
-            onChangeType={handleChangeTypeOldPassword}
-          />
-          <div className="form-error">
-            {formDataPassword.oldPassword.message}
-          </div>
-        </div>
-        <div className="col-12 pb-4">
-          <p className="text-dark fw-bold">Nova senha</p>
-          <FormPassword
-            {...formDataPassword.newPassword}
-            className="form-control base-input"
-            onTurnDirty={handleTurnDirtyPassword}
-            onChange={handleInputChangePassword}
-            onChangeType={handleChangeTypeNewPassword}
-          />
-          <div className="form-error">
-            {formDataPassword.newPassword.message}
-          </div>
-        </div>
-        <div className="col-12 pb-3">
-          <p className="text-dark fw-bold">Confirmar senha</p>
-          <FormPassword
-            {...formDataPassword.newConfirmationPassword}
-            className="form-control base-input"
-            onTurnDirty={handleTurnDirtyPassword}
-            onChange={handleInputChangePassword}
-            onChangeType={handleChangeTypeNewConfirmationPassword}
-          />
-          <div className="form-error">
-            {formDataPassword.newConfirmationPassword.message}
-          </div>
-        </div>
+          <h4 className="pb-3">Alteração de senha</h4>
 
-        <div className="text-end">
-          <div className="d-inline-block">
-            <ButtonPrimary text="Salvar alterações" />
+          {submitResponseFail && (
+            <div className="text-center pb-3">
+              <div className="d-inline-flex p-3 fw-bold form-password-error">
+                A senha atual está incorreta, verifique e tente novamente.
+              </div>
+            </div>
+          )}
+
+          <div className="col-12 pb-3">
+            <p className="text-dark fw-bold">Senha atual</p>
+            <FormPassword
+              {...formDataPassword.oldPassword}
+              className="form-control base-input"
+              onTurnDirty={handleTurnDirtyPassword}
+              onChange={handleInputChangePassword}
+              onChangeType={handleChangeTypeOldPassword}
+            />
+            <div className="form-error">
+              {formDataPassword.oldPassword.message}
+            </div>
           </div>
-        </div>
-      </form>
+          <div className="col-12 pb-4">
+            <p className="text-dark fw-bold">Nova senha</p>
+            <FormPassword
+              {...formDataPassword.newPassword}
+              className="form-control base-input"
+              onTurnDirty={handleTurnDirtyPassword}
+              onChange={handleInputChangePassword}
+              onChangeType={handleChangeTypeNewPassword}
+            />
+            <div className="form-error">
+              {formDataPassword.newPassword.message}
+            </div>
+          </div>
+          <div className="col-12 pb-3">
+            <p className="text-dark fw-bold">Confirmar senha</p>
+            <FormPassword
+              {...formDataPassword.newConfirmationPassword}
+              className="form-control base-input"
+              onTurnDirty={handleTurnDirtyPassword}
+              onChange={handleInputChangePassword}
+              onChangeType={handleChangeTypeNewConfirmationPassword}
+            />
+            <div className="form-error">
+              {formDataPassword.newConfirmationPassword.message}
+            </div>
+          </div>
+
+          <div className="text-end">
+            <div className="d-inline-block">
+              <ButtonPrimary text="Salvar alterações" />
+            </div>
+          </div>
+        </form>
+      )}
 
       {dialogInfo.visible && (
         <div>

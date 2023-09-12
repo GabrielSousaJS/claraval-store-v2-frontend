@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ComeBack from "../../../../../components/ComeBack";
 import ButtonInverse from "../../../../../components/ButtonInverse";
 import FormInput from "../../../../../components/FormInput";
+import CategoryLoader from "./CategoryLoader";
 import * as validation from "../../../../../utils/validations";
 import * as forms from "../../../../../utils/forms";
 import * as categoryService from "../../../../../services/category-service";
@@ -23,6 +24,8 @@ export default function CategoryForm() {
     },
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const params = useParams();
 
   const isEditing = params.categoryId !== "create";
@@ -31,10 +34,14 @@ export default function CategoryForm() {
 
   useEffect(() => {
     if (isEditing) {
+      setIsLoading(true);
       categoryService
         .findByIdRequest(Number(params.categoryId))
         .then((response) => {
           setFormData(forms.updateAll(formData, response.data));
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     }
   }, []);
@@ -98,27 +105,31 @@ export default function CategoryForm() {
         )}
       </div>
       <div className="base-card p-3">
-        <form onSubmit={handleSubmit}>
-          <div className="row">
-            <div className="col-12 pb-3">
-              <FormInput
-                {...formData.name}
-                className="form-control base-input"
-                onChange={handleInputChange}
-                onTurnDirty={handleTurnDirty}
-              />
-              <div className="form-error">{formData.name.message}</div>
-            </div>
-            <div className="d-flex justify-content-between">
-              <div onClick={handleCancel}>
-                <ButtonInverse text={"Cancelar"} />
+        {isLoading ? (
+          <CategoryLoader />
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <div className="row">
+              <div className="col-12 pb-3">
+                <FormInput
+                  {...formData.name}
+                  className="form-control base-input"
+                  onChange={handleInputChange}
+                  onTurnDirty={handleTurnDirty}
+                />
+                <div className="form-error">{formData.name.message}</div>
               </div>
-              <div>
-                <ButtonPrimary text={"Salvar"} />
+              <div className="d-flex justify-content-between">
+                <div onClick={handleCancel}>
+                  <ButtonInverse text={"Cancelar"} />
+                </div>
+                <div>
+                  <ButtonPrimary text={"Salvar"} />
+                </div>
               </div>
             </div>
-          </div>
-        </form>
+          </form>
+        )}
       </div>
     </div>
   );

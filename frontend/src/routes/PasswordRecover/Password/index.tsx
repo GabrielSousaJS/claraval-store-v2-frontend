@@ -69,9 +69,7 @@ export default function Password() {
 
   function handleDialogInfoClose() {
     setDialogInfoData({ ...dialogInfoData, visible: false });
-    setTimeout(() => {
-      navigate("/login");
-    }, 3000);
+    navigate("/login");
   }
 
   return (

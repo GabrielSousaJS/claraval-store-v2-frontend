@@ -3,15 +3,24 @@ import { ButtonPrimary } from "../../../../../components/ButtonPrimary";
 import { UserDTO } from "../../../../../models/user";
 import { useEffect, useState } from "react";
 import UserCard from "../../../../../components/UserCard";
+import Loader from "../../../../../components/Loader";
 import * as userService from "../../../../../services/user-service";
 
 export default function AdminListing() {
+  const [isLoagind, setIsLoading] = useState(false);
+
   const [admins, setAdmins] = useState<UserDTO[]>([]);
 
   useEffect(() => {
-    userService.findAllAdminsRequest().then((response) => {
-      setAdmins(response.data);
-    });
+    setIsLoading(true);
+    userService
+      .findAllAdminsRequest()
+      .then((response) => {
+        setAdmins(response.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   return (
@@ -24,11 +33,15 @@ export default function AdminListing() {
       </div>
 
       <div className="row ps-2 pe-2">
-        {admins.map((admin) => (
-          <div className="col-12 pb-4" key={admin.id}>
-            <UserCard user={admin} />
-          </div>
-        ))}
+        {isLoagind ? (
+          <Loader />
+        ) : (
+          admins.map((admin) => (
+            <div className="col-12 pb-4" key={admin.id}>
+              <UserCard user={admin} />
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

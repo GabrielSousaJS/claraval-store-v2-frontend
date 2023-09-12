@@ -5,9 +5,12 @@ import { SpringPage } from "../../../../../models/vendor/spring-page";
 import { useEffect, useState } from "react";
 import ProductCrudCard from "./ProductCrudCard";
 import Pagination from "../../../../../components/Pagination";
+import Loader from "../../../../../components/Loader";
 import * as productService from "../../../../../services/product-service";
 
 export default function ProductListing() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const [page, setPage] = useState<SpringPage<ProductDTO>>();
 
   useEffect(() => {
@@ -15,9 +18,15 @@ export default function ProductListing() {
   }, []);
 
   function getProducts(pageNumber: number) {
-    productService.findAllRequest(pageNumber).then((response) => {
-      setPage(response.data);
-    });
+    setIsLoading(true);
+    productService
+      .findAllRequest(pageNumber)
+      .then((response) => {
+        setPage(response.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   return (
@@ -30,11 +39,15 @@ export default function ProductListing() {
       </div>
 
       <div className="row">
-        {page?.content.map((product) => (
-          <div className="col-sm-6 col-md-12" key={product.id}>
-            <ProductCrudCard product={product} onDelete={getProducts} />
-          </div>
-        ))}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          page?.content.map((product) => (
+            <div className="col-sm-6 col-md-12" key={product.id}>
+              <ProductCrudCard product={product} onDelete={getProducts} />
+            </div>
+          ))
+        )}
       </div>
 
       {page?.content.length !== 0 && (

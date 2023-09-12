@@ -13,3 +13,14 @@ export function requestBackend(config: AxiosRequestConfig) {
 
   return axios({ ...config, baseURL: BASE_URL, headers });
 }
+
+export async function requestAsyncBackend(config: AxiosRequestConfig) {
+  const headers = config.withCredentials
+    ? {
+        ...config.headers,
+        Authorization: `Bearer ${authService.getAccessToken()}`,
+      }
+    : config.headers;
+
+  return await axios({ ...config, baseURL: BASE_URL, headers });
+}

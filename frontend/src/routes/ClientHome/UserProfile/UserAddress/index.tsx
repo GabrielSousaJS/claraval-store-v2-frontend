@@ -2,6 +2,7 @@ import "./styles.css";
 
 import FormInput from "../../../../components/FormInput";
 import DialogInfo from "../../../../components/DialogInfo";
+import Loader from "../../../../components/Loader";
 import { useEffect, useState } from "react";
 import { UserDTO } from "../../../../models/user";
 import { ButtonPrimary } from "../../../../components/ButtonPrimary";
@@ -99,6 +100,8 @@ export default function UserAddress() {
     },
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [dialogInfo, setDialogInfo] = useState({
     visible: false,
     message: "Endereço atualizado com sucesso",
@@ -107,10 +110,16 @@ export default function UserAddress() {
   const [user, setUser] = useState<UserDTO>();
 
   useEffect(() => {
-    userService.getProfileRequest().then((response) => {
-      setUser(response.data);
-      setFormData(forms.updateAll(formData, response.data.address));
-    });
+    setIsLoading(true);
+    userService
+      .getProfileRequest()
+      .then((response) => {
+        setUser(response.data);
+        setFormData(forms.updateAll(formData, response.data.address));
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   function getCep(cep: string) {
@@ -170,88 +179,92 @@ export default function UserAddress() {
 
   return (
     <section className="address-form-container base-card p-3 ms-2 me-2">
-      <form onSubmit={handleSubmit}>
-        <div className="row">
-          <div className="col-12 pb-2">
-            <FormInput
-              {...formData.cep}
-              className="form-control base-input"
-              onTurnDirty={handleTurnDirty}
-              onChange={handleInputChange}
-            />
-            <div className="form-error">{formData.cep.message}</div>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <div className="row">
+            <div className="col-12 pb-2">
+              <FormInput
+                {...formData.cep}
+                className="form-control base-input"
+                onTurnDirty={handleTurnDirty}
+                onChange={handleInputChange}
+              />
+              <div className="form-error">{formData.cep.message}</div>
+            </div>
+            <div className="col-12 pb-2">
+              <FormInput
+                {...formData.street}
+                className="form-control base-input"
+                onTurnDirty={handleTurnDirty}
+                onChange={handleInputChange}
+              />
+              <div className="form-error">{formData.street.message}</div>
+            </div>
+            <div className="col-12 pb-2">
+              <FormInput
+                {...formData.number}
+                className="form-control base-input"
+                onTurnDirty={handleTurnDirty}
+                onChange={handleInputChange}
+              />
+              <div className="form-error">{formData.number.message}</div>
+            </div>
+            <div className="col-12 pb-2">
+              <FormInput
+                {...formData.neighborhood}
+                className="form-control base-input"
+                onTurnDirty={handleTurnDirty}
+                onChange={handleInputChange}
+              />
+              <div className="form-error">{formData.neighborhood.message}</div>
+            </div>
+            <div className="col-12 pb-2">
+              <FormInput
+                {...formData.complement}
+                className="form-control base-input"
+                onTurnDirty={handleTurnDirty}
+                onChange={handleInputChange}
+              />
+              <div className="form-error">{formData.complement.message}</div>
+            </div>
+            <div className="col-12 pb-2">
+              <FormInput
+                {...formData.city}
+                className="form-control base-input"
+                onTurnDirty={handleTurnDirty}
+                onChange={handleInputChange}
+              />
+              <div className="form-error">{formData.city.message}</div>
+            </div>
+            <div className="col-12 pb-2">
+              <FormInput
+                {...formData.state}
+                className="form-control base-input"
+                onTurnDirty={handleTurnDirty}
+                onChange={handleInputChange}
+              />
+              <div className="form-error">{formData.state.message}</div>
+            </div>
+            <div className="col-12 pb-3">
+              <FormInput
+                {...formData.country}
+                className="form-control base-input"
+                onTurnDirty={handleTurnDirty}
+                onChange={handleInputChange}
+              />
+              <div className="form-error">{formData.country.message}</div>
+            </div>
           </div>
-          <div className="col-12 pb-2">
-            <FormInput
-              {...formData.street}
-              className="form-control base-input"
-              onTurnDirty={handleTurnDirty}
-              onChange={handleInputChange}
-            />
-            <div className="form-error">{formData.street.message}</div>
-          </div>
-          <div className="col-12 pb-2">
-            <FormInput
-              {...formData.number}
-              className="form-control base-input"
-              onTurnDirty={handleTurnDirty}
-              onChange={handleInputChange}
-            />
-            <div className="form-error">{formData.number.message}</div>
-          </div>
-          <div className="col-12 pb-2">
-            <FormInput
-              {...formData.neighborhood}
-              className="form-control base-input"
-              onTurnDirty={handleTurnDirty}
-              onChange={handleInputChange}
-            />
-            <div className="form-error">{formData.neighborhood.message}</div>
-          </div>
-          <div className="col-12 pb-2">
-            <FormInput
-              {...formData.complement}
-              className="form-control base-input"
-              onTurnDirty={handleTurnDirty}
-              onChange={handleInputChange}
-            />
-            <div className="form-error">{formData.complement.message}</div>
-          </div>
-          <div className="col-12 pb-2">
-            <FormInput
-              {...formData.city}
-              className="form-control base-input"
-              onTurnDirty={handleTurnDirty}
-              onChange={handleInputChange}
-            />
-            <div className="form-error">{formData.city.message}</div>
-          </div>
-          <div className="col-12 pb-2">
-            <FormInput
-              {...formData.state}
-              className="form-control base-input"
-              onTurnDirty={handleTurnDirty}
-              onChange={handleInputChange}
-            />
-            <div className="form-error">{formData.state.message}</div>
-          </div>
-          <div className="col-12 pb-3">
-            <FormInput
-              {...formData.country}
-              className="form-control base-input"
-              onTurnDirty={handleTurnDirty}
-              onChange={handleInputChange}
-            />
-            <div className="form-error">{formData.country.message}</div>
-          </div>
-        </div>
 
-        <div className="text-end">
-          <div className="d-inline-block">
-            <ButtonPrimary text="Salvar alterações" />
+          <div className="text-end">
+            <div className="d-inline-block">
+              <ButtonPrimary text="Salvar alterações" />
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      )}
 
       {dialogInfo.visible && (
         <DialogInfo

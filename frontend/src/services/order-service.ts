@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from "axios";
-import { requestBackend } from "../utils/requests";
+import { requestAsyncBackend, requestBackend } from "../utils/requests";
 import { OrderItemDTO } from "../models/order-item";
 import { PaymentDTO } from "../models/payment";
 import { OrderDTO } from "../models/order";
@@ -20,7 +20,7 @@ export async function getOrdersByClientRequest() {
     withCredentials: true,
   };
 
-  return await requestBackend(config);
+  return await requestAsyncBackend(config);
 }
 
 export function getOrderByIdRequest(orderId: number) {

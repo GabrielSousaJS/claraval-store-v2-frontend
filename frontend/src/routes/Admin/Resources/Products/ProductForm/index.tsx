@@ -10,6 +10,7 @@ import ComeBack from "../../../../../components/ComeBack";
 import FormSelect from "../../../../../components/FormSelect";
 import FormTextArea from "../../../../../components/FormTextArea";
 import ButtonInverse from "../../../../../components/ButtonInverse";
+import Loader from "../../../../../components/Loader";
 import * as validation from "../../../../../utils/validations";
 import * as forms from "../../../../../utils/forms";
 import * as categoryService from "../../../../../services/category-service";
@@ -84,6 +85,8 @@ export default function ProductForm() {
     },
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const params = useParams();
 
   const navigate = useNavigate();
@@ -100,10 +103,14 @@ export default function ProductForm() {
 
   useEffect(() => {
     if (isEditing) {
+      setIsLoading(true);
       productService
         .findByIdRequest(Number(params.productId))
         .then((response) => {
           setFormData(forms.updateAll(formData, response.data));
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     }
   }, []);
@@ -163,90 +170,96 @@ export default function ProductForm() {
         <h3 className="text-dark">Dados do produto</h3>
       </div>
       <div className="base-card p-3">
-        <form onSubmit={handleSubmit}>
-          <div className="row">
-            <div className="col-lg-6">
-              <div className="row">
-                <div className="col-12 pb-3">
-                  <FormInput
-                    {...formData.name}
-                    className="form-control base-input"
-                    onChange={handleInputChange}
-                    onTurnDirty={handleTurnDirty}
-                  />
-                  <div className="form-error">{formData.name.message}</div>
-                </div>
-                <div className="col-lg-6 pb-3">
-                  <FormInput
-                    {...formData.price}
-                    className="form-control base-input"
-                    onChange={handleInputChange}
-                    onTurnDirty={handleTurnDirty}
-                  />
-                  <div className="form-error">{formData.price.message}</div>
-                </div>
-                <div className="col-lg-6 pb-3">
-                  <FormInput
-                    {...formData.quantity}
-                    className="form-control base-input"
-                    onChange={handleInputChange}
-                    onTurnDirty={handleTurnDirty}
-                  />
-                  <div className="form-error">{formData.quantity.message}</div>
-                </div>
-                <div className="col-12 pb-3">
-                  <FormSelect
-                    {...formData.categories}
-                    className="form-control base-input form-select-container"
-                    styles={selectStyles}
-                    options={categories}
-                    onChange={(obj: any) => {
-                      const newFormData = forms.updateAndValidate(
-                        formData,
-                        "categories",
-                        obj
-                      );
-                      setFormData(newFormData);
-                    }}
-                    isMulti
-                    getOptionLabel={(obj: any) => obj.name}
-                    getOptionValue={(obj: any) => String(obj.id)}
-                    onTurnDirty={handleTurnDirty}
-                  />
-                  <div className="form-error">
-                    {formData.categories.message}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <div className="row">
+              <div className="col-lg-6">
+                <div className="row">
+                  <div className="col-12 pb-3">
+                    <FormInput
+                      {...formData.name}
+                      className="form-control base-input"
+                      onChange={handleInputChange}
+                      onTurnDirty={handleTurnDirty}
+                    />
+                    <div className="form-error">{formData.name.message}</div>
+                  </div>
+                  <div className="col-lg-6 pb-3">
+                    <FormInput
+                      {...formData.price}
+                      className="form-control base-input"
+                      onChange={handleInputChange}
+                      onTurnDirty={handleTurnDirty}
+                    />
+                    <div className="form-error">{formData.price.message}</div>
+                  </div>
+                  <div className="col-lg-6 pb-3">
+                    <FormInput
+                      {...formData.quantity}
+                      className="form-control base-input"
+                      onChange={handleInputChange}
+                      onTurnDirty={handleTurnDirty}
+                    />
+                    <div className="form-error">
+                      {formData.quantity.message}
+                    </div>
+                  </div>
+                  <div className="col-12 pb-3">
+                    <FormSelect
+                      {...formData.categories}
+                      className="form-control base-input form-select-container"
+                      styles={selectStyles}
+                      options={categories}
+                      onChange={(obj: any) => {
+                        const newFormData = forms.updateAndValidate(
+                          formData,
+                          "categories",
+                          obj
+                        );
+                        setFormData(newFormData);
+                      }}
+                      isMulti
+                      getOptionLabel={(obj: any) => obj.name}
+                      getOptionValue={(obj: any) => String(obj.id)}
+                      onTurnDirty={handleTurnDirty}
+                    />
+                    <div className="form-error">
+                      {formData.categories.message}
+                    </div>
+                  </div>
+                  <div className="col-12 pb-3">
+                    <FormInput
+                      {...formData.imgUrl}
+                      className="form-control base-input"
+                      onChange={handleInputChange}
+                      onTurnDirty={handleTurnDirty}
+                    />
+                    <div className="form-error">{formData.imgUrl.message}</div>
                   </div>
                 </div>
-                <div className="col-12 pb-3">
-                  <FormInput
-                    {...formData.imgUrl}
-                    className="form-control base-input"
-                    onChange={handleInputChange}
-                    onTurnDirty={handleTurnDirty}
-                  />
-                  <div className="form-error">{formData.imgUrl.message}</div>
-                </div>
+              </div>
+              <div className="col-lg-6 pb-3">
+                <FormTextArea
+                  {...formData.description}
+                  className="form-control base-input crud-textarea"
+                  onChange={handleInputChange}
+                  onTurnDirty={handleTurnDirty}
+                />
+                <div className="form-error">{formData.description.message}</div>
               </div>
             </div>
-            <div className="col-lg-6 pb-3">
-              <FormTextArea
-                {...formData.description}
-                className="form-control base-input crud-textarea"
-                onChange={handleInputChange}
-                onTurnDirty={handleTurnDirty}
-              />
-              <div className="form-error">{formData.description.message}</div>
+            <div className="d-flex justify-content-between">
+              <div onClick={handleCancel}>
+                <ButtonInverse text={"Cancelar"} />
+              </div>
+              <div>
+                <ButtonPrimary text={"Salvar"} />
+              </div>
             </div>
-          </div>
-          <div className="d-flex justify-content-between">
-            <div onClick={handleCancel}>
-              <ButtonInverse text={"Cancelar"} />
-            </div>
-            <div>
-              <ButtonPrimary text={"Salvar"} />
-            </div>
-          </div>
-        </form>
+          </form>
+        )}
       </div>
     </div>
   );
