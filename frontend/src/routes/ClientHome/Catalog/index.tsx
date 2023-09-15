@@ -98,6 +98,8 @@ export default function Catalog() {
       <div className="row pt-4 pb-4">
         {isLoading ? (
           <CatalogLoader />
+        ) : page?.content.length === 0 ? (
+          <h3>Não foi encontrado</h3>
         ) : (
           page?.content.map((product) => (
             <div

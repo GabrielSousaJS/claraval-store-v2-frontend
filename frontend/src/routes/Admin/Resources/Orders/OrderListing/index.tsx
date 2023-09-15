@@ -55,6 +55,8 @@ export default function OrderListing() {
       <div className="row ps-2 pe-2">
         {isLoading ? (
           <Loader />
+        ) : page?.content.length === 0 ? (
+          <h3>Nenhum pedido realizado</h3>
         ) : (
           page?.content.map((order) => (
             <div className="pb-4" key={order.id}>

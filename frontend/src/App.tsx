@@ -39,6 +39,7 @@ import AdminForm from "./routes/Admin/Resources/UsersAdmin/AdminForm";
 import PasswordRecover from "./routes/PasswordRecover";
 import Email from "./routes/PasswordRecover/Email";
 import Password from "./routes/PasswordRecover/Password";
+import NotFound from "./routes/NotFound";
 import * as authService from "./services/auth-service";
 
 function App() {
@@ -139,7 +140,7 @@ function App() {
                 <Route path="email" element={<Email />} />
                 <Route path="password/:token" element={<Password />} />
               </Route>
-              <Route path="*" element={<h1>Not Found</h1>} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
         </ContextSearch.Provider>

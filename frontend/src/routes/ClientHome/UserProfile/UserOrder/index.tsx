@@ -37,6 +37,8 @@ export default function UserOrder() {
     <section className="p-2">
       {isLoading ? (
         <Loader />
+      ) : orders.length === 0 ? (
+        <h3>Nenhum pedido realizado</h3>
       ) : (
         orders.map((order) => (
           <div
